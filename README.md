@@ -1,2 +1,2 @@
 # JavaAudioSynthesizer
-This repository contains a program draft, which has to be developed during a lecture at DHBW Kalrsruhe.
+This repository handles a programming project, which has to be developed during a lecture at DHBW Kalrsruhe.
