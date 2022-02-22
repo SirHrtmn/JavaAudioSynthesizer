@@ -5,6 +5,8 @@ import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.FilterStateVariable;
 import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.SineOscillator;
+import com.jsyn.unitgen.UnitFilter;
+import com.jsyn.unitgen.UnitOscillator;
 
 public class SynthesizerHandler
 {
@@ -34,6 +36,24 @@ public class SynthesizerHandler
 			getSynthesizer();
 		}
 		return output;
+	}
+	
+	public static UnitOscillator getOscillator()
+	{
+		if (oscillator == null)
+		{
+			getSynthesizer();
+		}
+		return oscillator;
+	}
+	
+	public static UnitFilter getFilter()
+	{
+		if (filter == null)
+		{
+			getSynthesizer();
+		}
+		return filter;
 	}
 
 	private static Synthesizer createSynthesizer()
