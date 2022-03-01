@@ -27,4 +27,9 @@ public class SynthesizerPlayer
 		synthesizer.start();
 		synthesizer.startUnit(lineOut);
 	}
+
+	public void setUnitVoice(UnitVoice unitVoice)
+	{
+		this.unitVoice = unitVoice;
+	}
 }
