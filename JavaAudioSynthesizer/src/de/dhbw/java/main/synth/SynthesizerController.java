@@ -1,7 +1,6 @@
 package de.dhbw.java.main.synth;
 
-import com.jsyn.unitgen.UnitVoice;
-
+import de.dhbw.java.main.synth.circuits.OscillatorFilterVoice;
 import de.dhbw.java.main.synth.circuits.VoiceCircuits;
 
 public class SynthesizerController
@@ -10,11 +9,11 @@ public class SynthesizerController
 
 	public SynthesizerController()
 	{
-		UnitVoice defaultVoice = VoiceCircuits.SinusVoice.getUnit();
+		OscillatorFilterVoice defaultVoice = VoiceCircuits.SinusVoice.getUnit();
 		synthesizerPlayer = new SynthesizerPlayer(defaultVoice);
 	}
 
-	public void setUnitVoice(UnitVoice selectedVoice)
+	public void setUnitVoice(OscillatorFilterVoice selectedVoice)
 	{
 		synthesizerPlayer.setUnitVoice(selectedVoice);
 	}

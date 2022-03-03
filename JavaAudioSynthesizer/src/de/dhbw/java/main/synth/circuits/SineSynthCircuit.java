@@ -7,10 +7,12 @@ import com.jsyn.unitgen.FilterStateVariable;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitFilter;
 import com.jsyn.unitgen.UnitOscillator;
-import com.jsyn.unitgen.UnitVoice;
 import com.softsynth.shared.time.TimeStamp;
 
-public class SineSynthCircuit extends Circuit implements UnitVoice
+import de.dhbw.java.main.synth.configuration.EnvelopeConfiguration;
+import de.dhbw.java.main.synth.configuration.FilterConfiguration;
+
+public class SineSynthCircuit extends Circuit implements OscillatorFilterVoice
 {
 	private UnitOscillator oscillator;
 	private UnitFilter filter;
@@ -38,16 +40,44 @@ public class SineSynthCircuit extends Circuit implements UnitVoice
 	}
 
 	@Override
-	public void noteOff(TimeStamp stopTime)
+	public void noteOn(double frequency, double amplitude)
+	{
+		oscillator.frequency.set(frequency);
+
+		envelope.input.set(1.0);
+	}
+
+	@Override
+	public void noteOff()
 	{
 		envelope.input.set(0.0);
 	}
 
 	@Override
+	public void setFilterConfiguration(FilterConfiguration filterConfig)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void setEnvelopeCOnfiguration(EnvelopeConfiguration envelopeConfig)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
 	public void noteOn(double frequency, double amplitude, TimeStamp startTime)
 	{
-		oscillator.frequency.set(frequency);
+		// TODO Auto-generated method stub
 		
-		envelope.input.set(1.0);
+	}
+
+	@Override
+	public void noteOff(TimeStamp stopTime)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -3,15 +3,16 @@ package de.dhbw.java.main.synth;
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
-import com.jsyn.unitgen.UnitVoice;
+
+import de.dhbw.java.main.synth.circuits.OscillatorFilterVoice;
 
 public class SynthesizerPlayer
 {
 	private Synthesizer synthesizer;
 	private LineOut lineOut;
-	private UnitVoice unitVoice;
+	private OscillatorFilterVoice unitVoice;
 
-	public SynthesizerPlayer(UnitVoice unitVoice)
+	public SynthesizerPlayer(OscillatorFilterVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
 		this.lineOut = new LineOut();
@@ -30,7 +31,7 @@ public class SynthesizerPlayer
 		Runtime.getRuntime().addShutdownHook(new Thread(synthesizer::stop));
 	}
 
-	public void setUnitVoice(UnitVoice unitVoice)
+	public void setUnitVoice(OscillatorFilterVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
 	}
