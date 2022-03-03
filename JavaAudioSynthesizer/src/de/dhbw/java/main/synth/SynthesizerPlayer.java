@@ -1,4 +1,4 @@
-package de.dhbw.java.main;
+package de.dhbw.java.main.synth;
 
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
@@ -26,10 +26,22 @@ public class SynthesizerPlayer
 
 		synthesizer.start();
 		synthesizer.startUnit(lineOut);
+
+		Runtime.getRuntime().addShutdownHook(new Thread(synthesizer::stop));
 	}
 
 	public void setUnitVoice(UnitVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
+	}
+
+	public void noteOn(double frequency, double amplitude)
+	{
+		unitVoice.noteOn(frequency, amplitude, synthesizer.createTimeStamp());
+	}
+
+	public void noteOff()
+	{
+		unitVoice.noteOff(synthesizer.createTimeStamp());
 	}
 }
