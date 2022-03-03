@@ -1,14 +1,14 @@
-package de.dhbw.java.main.circuits;
+package de.dhbw.java.main.synth.circuits;
 
 import com.jsyn.unitgen.UnitVoice;
 
-public enum UnitVoiceCircuits
+public enum VoiceCircuits
 {
 	SinusVoice(new SineSynthCircuit());
 
 	private UnitVoice unitVoice;
 
-	private UnitVoiceCircuits(UnitVoice unitVoice)
+	private VoiceCircuits(UnitVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
 	}

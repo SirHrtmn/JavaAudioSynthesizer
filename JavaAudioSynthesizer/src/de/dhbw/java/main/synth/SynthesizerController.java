@@ -1,8 +1,8 @@
-package de.dhbw.java.main;
+package de.dhbw.java.main.synth;
 
 import com.jsyn.unitgen.UnitVoice;
 
-import de.dhbw.java.main.circuits.UnitVoiceCircuits;
+import de.dhbw.java.main.synth.circuits.VoiceCircuits;
 
 public class SynthesizerController
 {
@@ -10,7 +10,7 @@ public class SynthesizerController
 
 	public SynthesizerController()
 	{
-		UnitVoice defaultVoice = UnitVoiceCircuits.SinusVoice.getUnit();
+		UnitVoice defaultVoice = VoiceCircuits.SinusVoice.getUnit();
 		synthesizerPlayer = new SynthesizerPlayer(defaultVoice);
 	}
 
