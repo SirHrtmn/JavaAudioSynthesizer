@@ -13,5 +13,5 @@ public interface OscillatorFilterVoice extends UnitVoice
 
 	public void setFilterConfiguration(FilterConfiguration filterConfig);
 
-	public void setEnvelopeCOnfiguration(EnvelopeConfiguration envelopeConfig);
+	public void setEnvelopeConfiguration(EnvelopeConfiguration envelopeConfig);
 }
