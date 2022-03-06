@@ -4,14 +4,14 @@ public enum VoiceCircuits
 {
 	SinusVoice(new SineSynthCircuit());
 
-	private OscillatorFilterVoice unitVoice;
+	private FilterEnvelopeVoice unitVoice;
 
-	private VoiceCircuits(OscillatorFilterVoice unitVoice)
+	private VoiceCircuits(FilterEnvelopeVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
 	}
 
-	public OscillatorFilterVoice getUnit()
+	public FilterEnvelopeVoice getUnit()
 	{
 		return unitVoice;
 	}

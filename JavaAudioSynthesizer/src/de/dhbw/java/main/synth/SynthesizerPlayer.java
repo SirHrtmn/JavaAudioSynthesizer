@@ -4,15 +4,15 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
-import de.dhbw.java.main.synth.circuits.OscillatorFilterVoice;
+import de.dhbw.java.main.synth.circuits.FilterEnvelopeVoice;
 
 public class SynthesizerPlayer
 {
 	private Synthesizer synthesizer;
 	private LineOut lineOut;
-	private OscillatorFilterVoice unitVoice;
+	private FilterEnvelopeVoice unitVoice;
 
-	public SynthesizerPlayer(OscillatorFilterVoice unitVoice)
+	public SynthesizerPlayer(FilterEnvelopeVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
 		this.lineOut = new LineOut();
@@ -31,7 +31,7 @@ public class SynthesizerPlayer
 		Runtime.getRuntime().addShutdownHook(new Thread(synthesizer::stop));
 	}
 
-	public void setUnitVoice(OscillatorFilterVoice unitVoice)
+	public void setUnitVoice(FilterEnvelopeVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
 	}
