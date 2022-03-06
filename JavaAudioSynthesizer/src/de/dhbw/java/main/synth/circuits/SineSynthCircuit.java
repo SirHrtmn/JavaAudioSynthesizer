@@ -5,20 +5,29 @@ import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.EnvelopeDAHDSR;
 import com.jsyn.unitgen.FilterStateVariable;
 import com.jsyn.unitgen.SineOscillator;
-import com.jsyn.unitgen.UnitFilter;
 import com.jsyn.unitgen.UnitOscillator;
 import com.softsynth.shared.time.TimeStamp;
 
+import de.dhbw.java.main.synth.configuration.DefaultConfigurations;
 import de.dhbw.java.main.synth.configuration.EnvelopeConfiguration;
 import de.dhbw.java.main.synth.configuration.FilterConfiguration;
 
-public class SineSynthCircuit extends Circuit implements OscillatorFilterVoice
+public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 {
 	private UnitOscillator oscillator;
-	private UnitFilter filter;
+	private FilterStateVariable filter;
 	private EnvelopeDAHDSR envelope;
+	private FilterConfiguration filterConfiguration;
+	private EnvelopeConfiguration envelopeConfiguration;
 
 	public SineSynthCircuit()
+	{
+		this(DefaultConfigurations.getFilterConfig(),
+				DefaultConfigurations.getEnvelopeConfig());
+	}
+
+	public SineSynthCircuit(FilterConfiguration filterConfiguration,
+			EnvelopeConfiguration envelopeConfiguration)
 	{
 		super();
 		this.oscillator = new SineOscillator();
@@ -31,6 +40,9 @@ public class SineSynthCircuit extends Circuit implements OscillatorFilterVoice
 
 		envelope.output.connect(oscillator.amplitude);
 		oscillator.output.connect(filter.input);
+
+		applyEnvelopeConfiguration(envelopeConfiguration);
+		applyFilterConfiguration(filterConfiguration);
 	}
 
 	@Override
@@ -54,30 +66,57 @@ public class SineSynthCircuit extends Circuit implements OscillatorFilterVoice
 	}
 
 	@Override
-	public void setFilterConfiguration(FilterConfiguration filterConfig)
+	public void applyFilterConfiguration(FilterConfiguration filterConfig)
 	{
-		// TODO Auto-generated method stub
-
+		this.filterConfiguration = filterConfig;
 	}
 
 	@Override
-	public void setEnvelopeCOnfiguration(EnvelopeConfiguration envelopeConfig)
+	public void applyEnvelopeConfiguration(EnvelopeConfiguration envelopeConfig)
 	{
-		// TODO Auto-generated method stub
+		this.envelopeConfiguration = envelopeConfig;
 
 	}
 
 	@Override
 	public void noteOn(double frequency, double amplitude, TimeStamp startTime)
 	{
-		// TODO Auto-generated method stub
-		
+		oscillator.frequency.set(frequency);
+		oscillator.amplitude.set(amplitude);
+
+		waitUntilPointOfTime(startTime);
+
+		envelope.amplitude.set(amplitude);
 	}
 
 	@Override
 	public void noteOff(TimeStamp stopTime)
 	{
-		// TODO Auto-generated method stub
-		
+		waitUntilPointOfTime(stopTime);
+
+		envelope.amplitude.set(0.0);
+	}
+
+	private void waitForASpecifiedTime(long timeToWait)
+	{
+		try
+		{
+			Thread.sleep(timeToWait);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	private void waitUntilPointOfTime(TimeStamp pointOfTime)
+	{
+		double currentTime = oscillator.getSynthesizer().getCurrentTime();
+		long timeToWait = (long) (pointOfTime.getTime() - currentTime);
+
+		if (timeToWait > 0)
+		{
+			waitForASpecifiedTime(timeToWait);
+		}
 	}
 }
