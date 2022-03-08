@@ -38,11 +38,11 @@ public class SynthesizerPlayer
 
 	public void noteOn(double frequency, double amplitude)
 	{
-		unitVoice.noteOn(frequency, amplitude, synthesizer.createTimeStamp());
+		unitVoice.noteOn(frequency, amplitude);
 	}
 
 	public void noteOff()
 	{
-		unitVoice.noteOff(synthesizer.createTimeStamp());
+		unitVoice.noteOff();
 	}
 }
