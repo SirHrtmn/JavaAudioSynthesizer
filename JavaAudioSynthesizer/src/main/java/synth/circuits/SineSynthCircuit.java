@@ -1,4 +1,4 @@
-package de.dhbw.java.main.synth.circuits;
+package synth.circuits;
 
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.Circuit;
@@ -8,9 +8,9 @@ import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 import com.softsynth.shared.time.TimeStamp;
 
-import de.dhbw.java.main.synth.DefaultConstants;
-import de.dhbw.java.main.synth.configuration.EnvelopeConfiguration;
-import de.dhbw.java.main.synth.configuration.FilterConfiguration;
+import synth.DefaultConstants;
+import synth.configuration.EnvelopeConfiguration;
+import synth.configuration.FilterConfiguration;
 
 public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 {

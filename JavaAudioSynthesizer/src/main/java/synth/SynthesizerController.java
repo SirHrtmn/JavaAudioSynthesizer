@@ -1,7 +1,7 @@
-package de.dhbw.java.main.synth;
+package synth;
 
-import de.dhbw.java.main.synth.circuits.FilterEnvelopeVoice;
-import de.dhbw.java.main.synth.circuits.VoiceCircuits;
+import synth.circuits.FilterEnvelopeVoice;
+import synth.circuits.VoiceCircuits;
 
 public class SynthesizerController
 {

@@ -1,9 +1,9 @@
-package de.dhbw.java.main.synth;
+package synth;
 
-import de.dhbw.java.main.synth.circuits.FilterEnvelopeVoice;
-import de.dhbw.java.main.synth.circuits.VoiceCircuits;
-import de.dhbw.java.main.synth.configuration.EnvelopeConfiguration;
-import de.dhbw.java.main.synth.configuration.FilterConfiguration;
+import synth.circuits.FilterEnvelopeVoice;
+import synth.circuits.VoiceCircuits;
+import synth.configuration.EnvelopeConfiguration;
+import synth.configuration.FilterConfiguration;
 
 public class DefaultConstants
 {	

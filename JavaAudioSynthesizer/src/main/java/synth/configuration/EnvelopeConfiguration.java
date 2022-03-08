@@ -1,4 +1,4 @@
-package de.dhbw.java.main.synth.configuration;
+package synth.configuration;
 
 public class EnvelopeConfiguration
 {

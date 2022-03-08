@@ -1,9 +1,9 @@
-package de.dhbw.java.main.synth.circuits;
+package synth.circuits;
 
 import com.jsyn.unitgen.UnitVoice;
 
-import de.dhbw.java.main.synth.configuration.EnvelopeConfiguration;
-import de.dhbw.java.main.synth.configuration.FilterConfiguration;
+import synth.configuration.EnvelopeConfiguration;
+import synth.configuration.FilterConfiguration;
 
 public interface FilterEnvelopeVoice extends UnitVoice
 {

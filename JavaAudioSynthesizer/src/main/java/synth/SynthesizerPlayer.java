@@ -1,10 +1,10 @@
-package de.dhbw.java.main.synth;
+package synth;
 
 import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
-import de.dhbw.java.main.synth.circuits.FilterEnvelopeVoice;
+import synth.circuits.FilterEnvelopeVoice;
 
 public class SynthesizerPlayer
 {

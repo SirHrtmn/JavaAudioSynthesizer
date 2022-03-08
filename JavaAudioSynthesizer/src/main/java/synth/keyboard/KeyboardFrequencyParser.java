@@ -1,4 +1,4 @@
-package de.dhbw.java.main.synth.keyboard;
+package synth.keyboard;
 
 public class KeyboardFrequencyParser
 {

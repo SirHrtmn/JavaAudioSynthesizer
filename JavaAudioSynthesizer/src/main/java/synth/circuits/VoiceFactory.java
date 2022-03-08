@@ -1,4 +1,4 @@
-package de.dhbw.java.main.synth.circuits;
+package synth.circuits;
 
 public interface VoiceFactory
 {
