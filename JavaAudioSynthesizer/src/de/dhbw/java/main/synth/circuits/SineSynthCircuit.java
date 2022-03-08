@@ -8,7 +8,7 @@ import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 import com.softsynth.shared.time.TimeStamp;
 
-import de.dhbw.java.main.synth.configuration.DefaultConfigurations;
+import de.dhbw.java.main.synth.DefaultConstants;
 import de.dhbw.java.main.synth.configuration.EnvelopeConfiguration;
 import de.dhbw.java.main.synth.configuration.FilterConfiguration;
 
@@ -22,8 +22,8 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 
 	public SineSynthCircuit()
 	{
-		this(DefaultConfigurations.getFilterConfig(),
-				DefaultConfigurations.getEnvelopeConfig());
+		this(DefaultConstants.getFilterConfig(),
+				DefaultConstants.getEnvelopeConfig());
 	}
 
 	public SineSynthCircuit(FilterConfiguration filterConfiguration,
