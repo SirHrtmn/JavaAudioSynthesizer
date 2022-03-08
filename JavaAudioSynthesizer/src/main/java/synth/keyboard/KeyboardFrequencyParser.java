@@ -10,12 +10,17 @@ public class KeyboardFrequencyParser
 		// static class -> no constructor needed
 	}
 
-	public double getFrequencyFromNoteIndex(int noteIndex)
+	public static double getFrequencyFromNoteIndex(int noteIndex)
 	{
+		if (noteIndex < 0 || noteIndex > 108)
+		{
+			throw new IndexOutOfBoundsException(noteIndex);
+		}
+		
 		int octave = noteIndex / 12;
-		int semiTone = noteIndex % 12;
+		double semiTone = noteIndex % 12;
 
-		return getFrequencyFromOctaveAndSemiTone(octave, semiTone);
+		return getFrequencyFromOctaveAndSemiTone(octave, (int)semiTone);
 	}
 
 	public static double getFrequencyFromOctaveAndSemiTone(int octave, int semiTone)
