@@ -1,4 +1,4 @@
-package main;
+package gui;
 
 import synth.SynthesizerPlayer;
 import synth.circuits.VoiceCircuits;
