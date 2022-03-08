@@ -2,17 +2,17 @@ package de.dhbw.java.main.synth.circuits;
 
 public enum VoiceCircuits
 {
-	SinusVoice(new SineSynthCircuit());
+	SinusVoice(() -> new SineSynthCircuit());
 
-	private FilterEnvelopeVoice unitVoice;
+	private VoiceFactory voiceFactory;
 
-	private VoiceCircuits(FilterEnvelopeVoice unitVoice)
+	private VoiceCircuits(VoiceFactory voiceFactory)
 	{
-		this.unitVoice = unitVoice;
+		this.voiceFactory = voiceFactory;
 	}
 
 	public FilterEnvelopeVoice getUnit()
 	{
-		return unitVoice;
+		return voiceFactory.buildVoice();
 	}
 }
