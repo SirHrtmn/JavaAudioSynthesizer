@@ -2,6 +2,8 @@ package synth.keyboard;
 
 public class KeyboardFrequencyParser
 {
+	private static final int LOWER_INDEX_LIMIT = 0;
+	private static final int UPPER_INDEX_LIMIT = 108;
 	private static final double EQUAL_12_TONE_TEMPERMENT = Math.pow(2, 1.0 / 12.0);
 	private static final double PITCH_FREQUENCY_NOTE_A3 = 220.0;
 
@@ -12,21 +14,20 @@ public class KeyboardFrequencyParser
 
 	public static double getFrequencyFromNoteIndex(int noteIndex)
 	{
-		if (noteIndex < 0 || noteIndex > 108)
-		{
-			throw new IndexOutOfBoundsException(noteIndex);
-		}
-		
+		checkIndexOfNote(noteIndex);
+
 		int octave = noteIndex / 12;
 		double semiTone = noteIndex % 12;
 
-		return getFrequencyFromOctaveAndSemiTone(octave, (int)semiTone);
+		return getFrequencyFromOctaveAndSemiTone(octave, (int) semiTone);
 	}
 
 	public static double getFrequencyFromOctaveAndSemiTone(int octave, int semiTone)
 	{
-		int halfStepsFromA = getHalfStepsFromA(octave, semiTone);
+		int indexOfNote = getIndexOfNote(octave, semiTone);
+		checkIndexOfNote(indexOfNote);
 
+		int halfStepsFromA = getHalfStepsFromA(indexOfNote);
 		return getFrequency(halfStepsFromA);
 	}
 
@@ -38,16 +39,30 @@ public class KeyboardFrequencyParser
 		return pitchRatio * pitchFrequency;
 	}
 
-	private static int getHalfStepsFromA(int octave, int semiTone)
+	private static int getHalfStepsFromA(int indexOfNote)
 	{
-		int rawNoteIndex = getIndexOfNote(octave, semiTone);
 		int noteIndexPitchNoteA3 = getIndexOfNote(3, 9);
 
-		return rawNoteIndex - noteIndexPitchNoteA3;
+		return indexOfNote - noteIndexPitchNoteA3;
 	}
 
 	private static int getIndexOfNote(int octave, int semiTone)
 	{
-		return (octave * 12) + semiTone;
+		if (octave < 0 || octave > 8)
+		{
+			throw new IndexOutOfBoundsException(
+					"Octave '" + octave + "' is out of range!");
+		}
+		
+		int indexIncreaseFromOctave = octave * 12;
+		return indexIncreaseFromOctave + semiTone;
+	}
+
+	private static void checkIndexOfNote(int noteIndex)
+	{
+		if (noteIndex < LOWER_INDEX_LIMIT || noteIndex > UPPER_INDEX_LIMIT)
+		{
+			throw new IndexOutOfBoundsException(noteIndex);
+		}
 	}
 }
