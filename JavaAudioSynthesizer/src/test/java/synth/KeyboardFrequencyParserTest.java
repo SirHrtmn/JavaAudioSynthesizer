@@ -14,16 +14,6 @@ public class KeyboardFrequencyParserTest
 	private static final double DELTA = 0.001;
 
 	@Test
-	public void testLowestANote()
-	{
-		double a0Frequency = parseFrequency(0, 9);
-		Assert.assertEquals(27.50, a0Frequency, DELTA);
-
-		double a0NoteIndexFrequency = parseFrequency(9);
-		Assert.assertEquals(27.50, a0NoteIndexFrequency, DELTA);
-	}
-
-	@Test
 	public void testValidNoteIndexes()
 	{
 		Map<Integer, Double> a_noteFrequencyPairs = new HashMap<>();
@@ -68,6 +58,7 @@ public class KeyboardFrequencyParserTest
 	@Test
 	public void testValidOctaveAndSemiTones()
 	{
+		// Test all c notes
 		assertFrequencyFromOctaveAndSemitones(0, 0, 16.3516);
 		assertFrequencyFromOctaveAndSemitones(1, 0, 32.7032);
 		assertFrequencyFromOctaveAndSemitones(2, 0, 65.4064);
@@ -78,10 +69,25 @@ public class KeyboardFrequencyParserTest
 		assertFrequencyFromOctaveAndSemitones(7, 0, 2093.005);
 		assertFrequencyFromOctaveAndSemitones(8, 0, 4186.009);
 
+		// Test some uncommon c note notations
 		assertFrequencyFromOctaveAndSemitones(1, -12, 16.3516);
 		assertFrequencyFromOctaveAndSemitones(0, 12, 32.7032);
 		assertFrequencyFromOctaveAndSemitones(0, 24, 65.4064);
 		assertFrequencyFromOctaveAndSemitones(0, 36, 130.8128);
+		
+		// Test all semi tones in central octave (4)
+		assertFrequencyFromOctaveAndSemitones(4, 0, 261.6256);	/* C  */
+		assertFrequencyFromOctaveAndSemitones(4, 1, 277.1826);  /* C# */
+		assertFrequencyFromOctaveAndSemitones(4, 2, 293.6648);  /* D  */
+		assertFrequencyFromOctaveAndSemitones(4, 3, 311.127);   /* D# */
+		assertFrequencyFromOctaveAndSemitones(4, 4, 329.6276);  /* E  */
+		assertFrequencyFromOctaveAndSemitones(4, 5, 349.2282);  /* F  */
+		assertFrequencyFromOctaveAndSemitones(4, 6, 369.9944);  /* F# */
+		assertFrequencyFromOctaveAndSemitones(4, 7, 391.9954);  /* G  */
+		assertFrequencyFromOctaveAndSemitones(4, 8, 415.3047);  /* G# */
+		assertFrequencyFromOctaveAndSemitones(4, 9, 440.0);     /* A  */
+		assertFrequencyFromOctaveAndSemitones(4, 10, 466.1638); /* A# */
+		assertFrequencyFromOctaveAndSemitones(4, 11, 493.8833); /* B  */
 	}
 
 	@Test
