@@ -4,12 +4,13 @@ import synth.circuits.FilterEnvelopeVoice;
 import synth.circuits.VoiceCircuits;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
+import synth.configuration.FilterConfiguration.FilterType;
 
 public class DefaultConstants
 {	
 	public static FilterConfiguration getFilterConfig()
 	{
-		return new FilterConfiguration(1.0, 1.0, 1.0);
+		return new FilterConfiguration(440.0, FilterType.BAND_PASS);
 	}
 	
 	public static EnvelopeConfiguration getEnvelopeConfig()
