@@ -5,6 +5,7 @@ import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
 import synth.circuits.FilterEnvelopeVoice;
+import synth.configuration.FilterConfiguration;
 
 public class SynthesizerPlayer
 {
@@ -34,6 +35,11 @@ public class SynthesizerPlayer
 	public void setUnitVoice(FilterEnvelopeVoice unitVoice)
 	{
 		this.unitVoice = unitVoice;
+	}
+
+	public void applyFilterConfiguration(FilterConfiguration filterConfig)
+	{
+		unitVoice.applyFilterConfiguration(filterConfig);
 	}
 
 	public void noteOn(double frequency, double amplitude)
