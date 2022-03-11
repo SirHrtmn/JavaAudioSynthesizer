@@ -43,6 +43,8 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 		envelope.output.connect(oscillator.amplitude);
 		oscillator.output.connect(filter.input);
 
+		this.filterConfiguration = filterConfiguration;
+		this.envelopeConfiguration = envelopeConfiguration;
 		applyEnvelopeConfiguration(envelopeConfiguration);
 		applyFilterConfiguration(filterConfiguration);
 	}
