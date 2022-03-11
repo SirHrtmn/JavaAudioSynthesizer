@@ -46,6 +46,11 @@ public class SynthesizerPlayer
 	{
 		unitVoice.noteOn(frequency, amplitude);
 	}
+	
+	public void noteOn(double frequency)
+	{
+		noteOn(frequency, 1.0);
+	}
 
 	public void noteOff()
 	{
