@@ -5,17 +5,17 @@ public class EnvelopeConfiguration
 	private double delay;
 	private double attack;
 	private double decay;
-	private double sustain;
+	private double hold;
 	private double release;
 
 	public EnvelopeConfiguration(double delay, double attack, double decay,
-			double sustain, double release)
+			double hold, double release)
 	{
 		super();
 		this.delay = delay;
 		this.attack = attack;
 		this.decay = decay;
-		this.sustain = sustain;
+		this.hold = hold;
 		this.release = release;
 	}
 
@@ -49,14 +49,14 @@ public class EnvelopeConfiguration
 		this.decay = decay;
 	}
 
-	public double getSustain()
+	public double getHold()
 	{
-		return sustain;
+		return hold;
 	}
 
-	public void setSustain(double sustain)
+	public void setHold(double hold)
 	{
-		this.sustain = sustain;
+		this.hold = hold;
 	}
 
 	public double getRelease()
@@ -68,5 +68,23 @@ public class EnvelopeConfiguration
 	{
 		this.release = release;
 	}
-
+	
+	@Override
+	public boolean equals(Object object)
+	{
+		if (!(object instanceof EnvelopeConfiguration))
+		{
+			return false;
+		}
+		
+		EnvelopeConfiguration envConfig = (EnvelopeConfiguration) object;
+		
+		boolean delayEqual = Double.compare(delay, envConfig.delay) == 0;
+		boolean attackEqual = Double.compare(attack, envConfig.attack) == 0;
+		boolean decayEqual = Double.compare(decay, envConfig.decay) == 0;
+		boolean holdEqual = Double.compare(hold, envConfig.hold) == 0;
+		boolean releaseEqual = Double.compare(release, envConfig.release) == 0;
+		
+		return delayEqual && attackEqual && decayEqual && holdEqual && releaseEqual;
+	}
 }
