@@ -3,7 +3,6 @@ package synth.circuits;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.EnvelopeDAHDSR;
-import com.jsyn.unitgen.FilterStateVariable;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.TunableFilter;
 import com.jsyn.unitgen.UnitOscillator;
@@ -33,7 +32,7 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	{
 		super();
 		this.oscillator = new SineOscillator();
-		this.filter = new FilterStateVariable();
+		this.filter = filterConfiguration.getFilterType().getNewFilter();
 		this.envelope = new EnvelopeDAHDSR();
 
 		super.add(envelope);
@@ -43,8 +42,6 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 		envelope.output.connect(oscillator.amplitude);
 		oscillator.output.connect(filter.input);
 
-		this.filterConfiguration = filterConfiguration;
-		this.envelopeConfiguration = envelopeConfiguration;
 		applyEnvelopeConfiguration(envelopeConfiguration);
 		applyFilterConfiguration(filterConfiguration);
 	}
@@ -73,13 +70,14 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	public void applyFilterConfiguration(FilterConfiguration newFilterConfig)
 	{
 		FilterType newFilterType = newFilterConfig.getFilterType();
-		FilterType oldFilterType = this.filterConfiguration.getFilterType();
+		FilterConfiguration oldFilterConf = this.filterConfiguration;
 		
-		if (!oldFilterType.equals(newFilterType))
+		boolean newFilterTypeSelected = !oldFilterConf.getFilterType().equals(newFilterType);
+		if (oldFilterConf == null || newFilterTypeSelected)
 		{
 			replaceFilter(newFilterType.getNewFilter());
 		}
-		
+
 		filter.frequency.set(newFilterConfig.getFrequency());
 		this.filterConfiguration = newFilterConfig;
 	}
@@ -91,13 +89,13 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 		{
 			return;
 		}
-		
+
 		envelope.attack.set(newEnvelopeConfig.getAttack());
 		envelope.decay.set(newEnvelopeConfig.getDecay());
 		envelope.delay.set(newEnvelopeConfig.getDelay());
 		envelope.hold.set(newEnvelopeConfig.getHold());
 		envelope.release.set(newEnvelopeConfig.getRelease());
-		
+
 		this.envelopeConfiguration = newEnvelopeConfig;
 	}
 
