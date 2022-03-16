@@ -1,59 +1,47 @@
 package synth.configuration;
 
-import com.jsyn.unitgen.FilterBandPass;
-import com.jsyn.unitgen.FilterHighPass;
-import com.jsyn.unitgen.FilterLowPass;
-import com.jsyn.unitgen.TunableFilter;
-
 public class FilterConfiguration
 {
 
-	private double frequency;
-	private FilterType filterType;
+	private double lowPass;
+	private double bandPass;
+	private double highPass;
 
-	public FilterConfiguration(double frequency, FilterType filterType)
+	public FilterConfiguration(double lowPass, double bandPass, double highPass)
 	{
 		super();
-		this.frequency = frequency;
-		this.filterType = filterType;
+		this.lowPass = lowPass;
+		this.bandPass = bandPass;
+		this.highPass = highPass;
 	}
 
-	public double getFrequency()
+	public double getLowPass()
 	{
-		return frequency;
+		return lowPass;
 	}
 
-	public void setFrequency(double frequency)
+	public void setLowPass(double lowPass)
 	{
-		this.frequency = frequency;
+		this.lowPass = lowPass;
 	}
 
-	public FilterType getFilterType()
+	public double getBandPass()
 	{
-		return filterType;
+		return bandPass;
 	}
 
-	public void setFilterType(FilterType filterType)
+	public void setBandPass(double bandPass)
 	{
-		this.filterType = filterType;
+		this.bandPass = bandPass;
 	}
 
-	public enum FilterType
+	public double getHighPass()
 	{
-		BAND_PASS(() -> new FilterBandPass()), 
-		HIGH_PASS(() -> new FilterHighPass()), 
-		LOW_PASS(() -> new FilterLowPass());
+		return highPass;
+	}
 
-		private FilterFactory filterFactory;
-
-		FilterType(FilterFactory filterFactory)
-		{
-			this.filterFactory = filterFactory;
-		}
-
-		public TunableFilter getNewFilter()
-		{
-			return filterFactory.build();
-		}
+	public void setHighPass(double highPass)
+	{
+		this.highPass = highPass;
 	}
 }
