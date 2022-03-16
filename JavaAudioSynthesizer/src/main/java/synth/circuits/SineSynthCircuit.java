@@ -3,61 +3,57 @@ package synth.circuits;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.EnvelopeDAHDSR;
+import com.jsyn.unitgen.FilterBandPass;
+import com.jsyn.unitgen.FilterHighPass;
+import com.jsyn.unitgen.FilterLowPass;
+import com.jsyn.unitgen.FilterStateVariable;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.TunableFilter;
 import com.jsyn.unitgen.UnitOscillator;
 import com.softsynth.shared.time.TimeStamp;
 
-import synth.DefaultConstants;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
-import synth.configuration.FilterConfiguration.FilterType;
+import synth.utils.DefaultConstants;
+import synth.utils.TimeUtils;
 
 public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 {
 	private UnitOscillator oscillator;
-	private TunableFilter filter;
 	private EnvelopeDAHDSR envelope;
-	private FilterConfiguration filterConfiguration;
-	private EnvelopeConfiguration envelopeConfiguration;
+	private TunableFilter bandPass;
+	private TunableFilter lowPass;
+	private TunableFilter highPass;
+	private TunableFilter voiceOutput;
 
 	public SineSynthCircuit()
 	{
-		this(DefaultConstants.getFilterConfig(),
-				DefaultConstants.getEnvelopeConfig());
+		this(DefaultConstants.getFilterConfig(), DefaultConstants.getEnvelopeConfig());
 	}
 
-	public SineSynthCircuit(FilterConfiguration filterConfiguration,
-			EnvelopeConfiguration envelopeConfiguration)
+	public SineSynthCircuit(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super();
-		this.oscillator = new SineOscillator();
-		this.filter = filterConfiguration.getFilterType().getNewFilter();
-		this.envelope = new EnvelopeDAHDSR();
 
-		super.add(envelope);
-		super.add(oscillator);
-		super.add(filter);
+		initializeUnits();
+		addUnits();
+		connectUnits();
 
-		envelope.output.connect(oscillator.amplitude);
-		oscillator.output.connect(filter.input);
-
-		applyEnvelopeConfiguration(envelopeConfiguration);
-		applyFilterConfiguration(filterConfiguration);
+		applyFilterConfiguration(filterConfig);
+		applyEnvelopeConfiguration(envConfig);
 	}
 
 	@Override
 	public UnitOutputPort getOutput()
 	{
-		return filter.getOutput();
+		return voiceOutput.getOutput();
 	}
 
 	@Override
 	public void noteOn(double frequency, double amplitude)
 	{
 		oscillator.frequency.set(frequency);
-
-		envelope.input.set(1.0);
+		envelope.input.set(amplitude);
 	}
 
 	@Override
@@ -69,34 +65,19 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	@Override
 	public void applyFilterConfiguration(FilterConfiguration newFilterConfig)
 	{
-		FilterType newFilterType = newFilterConfig.getFilterType();
-		FilterConfiguration oldFilterConf = this.filterConfiguration;
-		
-		boolean newFilterTypeSelected = !oldFilterConf.getFilterType().equals(newFilterType);
-		if (oldFilterConf == null || newFilterTypeSelected)
-		{
-			replaceFilter(newFilterType.getNewFilter());
-		}
-
-		filter.frequency.set(newFilterConfig.getFrequency());
-		this.filterConfiguration = newFilterConfig;
+		lowPass.frequency.set(newFilterConfig.getLowPass());
+		bandPass.frequency.set(newFilterConfig.getBandPass());
+		highPass.frequency.set(newFilterConfig.getHighPass());
 	}
 
 	@Override
 	public void applyEnvelopeConfiguration(EnvelopeConfiguration newEnvelopeConfig)
 	{
-		if (this.envelopeConfiguration.equals(newEnvelopeConfig))
-		{
-			return;
-		}
-
 		envelope.attack.set(newEnvelopeConfig.getAttack());
 		envelope.decay.set(newEnvelopeConfig.getDecay());
 		envelope.delay.set(newEnvelopeConfig.getDelay());
 		envelope.hold.set(newEnvelopeConfig.getHold());
 		envelope.release.set(newEnvelopeConfig.getRelease());
-
-		this.envelopeConfiguration = newEnvelopeConfig;
 	}
 
 	@Override
@@ -105,7 +86,7 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 		oscillator.frequency.set(frequency);
 		oscillator.amplitude.set(amplitude);
 
-		waitUntilPointOfTime(startTime);
+		TimeUtils.waitUntilPointOfTime(getCurrentTime(), startTime);
 
 		envelope.amplitude.set(amplitude);
 	}
@@ -113,39 +94,43 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	@Override
 	public void noteOff(TimeStamp stopTime)
 	{
-		waitUntilPointOfTime(stopTime);
+		TimeUtils.waitUntilPointOfTime(getCurrentTime(), stopTime);
 
 		envelope.amplitude.set(0.0);
 	}
 
-	private void replaceFilter(TunableFilter newFilter)
+	private void initializeUnits()
 	{
-		oscillator.output.disconnect(filter.input);
-		super.add(newFilter);
-		filter = newFilter;
-		oscillator.output.connect(filter.input);
+		oscillator = new SineOscillator();
+		envelope = new EnvelopeDAHDSR();
+		voiceOutput = new FilterStateVariable();
+
+		bandPass = new FilterBandPass();
+		lowPass = new FilterLowPass();
+		highPass = new FilterHighPass();
 	}
 
-	private void waitForASpecifiedTime(long timeToWait)
+	private void addUnits()
 	{
-		try
-		{
-			Thread.sleep(timeToWait);
-		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+		super.add(envelope);
+		super.add(oscillator);
+		super.add(bandPass);
+		super.add(lowPass);
+		super.add(highPass);
+		super.add(voiceOutput);
 	}
 
-	private void waitUntilPointOfTime(TimeStamp pointOfTime)
+	private void connectUnits()
 	{
-		double currentTime = oscillator.getSynthesizer().getCurrentTime();
-		long timeToWait = (long) (pointOfTime.getTime() - currentTime);
+		envelope.output.connect(oscillator.amplitude);
+		oscillator.output.connect(lowPass.input);
+		lowPass.output.connect(bandPass.input);
+		bandPass.output.connect(highPass.input);
+		highPass.output.connect(voiceOutput.input);
+	}
 
-		if (timeToWait > 0)
-		{
-			waitForASpecifiedTime(timeToWait);
-		}
+	private double getCurrentTime()
+	{
+		return oscillator.getSynthesizer().getCurrentTime();
 	}
 }
