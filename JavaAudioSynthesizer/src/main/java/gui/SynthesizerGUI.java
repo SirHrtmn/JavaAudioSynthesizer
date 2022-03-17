@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import synth.SynthesizerController;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synth.utils.DefaultConstants;
@@ -14,11 +15,14 @@ public class SynthesizerGUI extends JFrame
 	private static final long serialVersionUID = 1L;
 	private FilterConfigurationPanel filterPanel;
 	private EnvelopeConfigurationPanel envelopePanel;
+	private GUIKeyboard keyboard;
+	private JPanel mainPanel;
+	private SynthesizerController controller;
 
 	public SynthesizerGUI()
 	{
 		super("Java Audio Synthesizer");
-		this.setSize(500, 500);
+		controller = new SynthesizerController();
 		setupGUI();
 	}
 
@@ -29,10 +33,9 @@ public class SynthesizerGUI extends JFrame
 
 		initializeFilterPanel();
 		initializeEnvelopePanel();
+		initializeKeyboard();
 
-		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.add(filterPanel, BorderLayout.EAST);
-		mainPanel.add(envelopePanel, BorderLayout.WEST);
+		setupMainPanel();
 
 		this.add(mainPanel);
 
@@ -40,16 +43,33 @@ public class SynthesizerGUI extends JFrame
 		this.setVisible(true);
 	}
 
+	private void setupMainPanel()
+	{
+		mainPanel = new JPanel(new BorderLayout());
+		mainPanel.add(filterPanel, BorderLayout.EAST);
+		mainPanel.add(envelopePanel, BorderLayout.WEST);
+		mainPanel.add(keyboard, BorderLayout.SOUTH);
+	}
+
+	private void initializeKeyboard()
+	{
+		keyboard = new GUIKeyboard();
+	}
+
 	private void initializeEnvelopePanel()
 	{
 		EnvelopeConfiguration envConfig = DefaultConstants.getEnvelopeConfig();
 		envelopePanel = new EnvelopeConfigurationPanel(envConfig);
+		envelopePanel.addChangeListener(
+				e -> controller.applyEnvelopeConfiguration(envelopePanel.getConfig()));
 	}
 
 	private void initializeFilterPanel()
 	{
 		FilterConfiguration filterConfig = DefaultConstants.getFilterConfig();
 		filterPanel = new FilterConfigurationPanel(filterConfig);
+		filterPanel.addChangeListener(
+				e -> controller.applyFilterConfiguration(filterPanel.getConfig()));
 	}
 
 	public static void main(String[] args)
