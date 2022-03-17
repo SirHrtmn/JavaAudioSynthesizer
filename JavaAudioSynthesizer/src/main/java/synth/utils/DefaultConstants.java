@@ -9,7 +9,7 @@ public class DefaultConstants
 {
 	public static FilterConfiguration getFilterConfig()
 	{
-		return new FilterConfiguration(0.0, 0.0, 0.0);
+		return new FilterConfiguration(440.0, 440.0, 440.0, 1.0);
 	}
 
 	public static EnvelopeConfiguration getEnvelopeConfig()
