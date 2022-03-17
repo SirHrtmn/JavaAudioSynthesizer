@@ -46,7 +46,7 @@ public class EnvelopeConfigurationPanel extends ConfigurationPanel
 	}
 
 	@Override
-	public Object getConfig()
+	public EnvelopeConfiguration getConfig()
 	{
 		return envConfig;
 	}
