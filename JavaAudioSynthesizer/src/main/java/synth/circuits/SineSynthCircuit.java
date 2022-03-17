@@ -21,9 +21,9 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 {
 	private UnitOscillator oscillator;
 	private EnvelopeDAHDSR envelope;
-	private TunableFilter bandPass;
-	private TunableFilter lowPass;
-	private TunableFilter highPass;
+	private FilterBandPass bandPass;
+	private FilterLowPass lowPass;
+	private FilterHighPass highPass;
 	private TunableFilter voiceOutput;
 
 	public SineSynthCircuit()
@@ -68,6 +68,10 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 		lowPass.frequency.set(newFilterConfig.getLowPass());
 		bandPass.frequency.set(newFilterConfig.getBandPass());
 		highPass.frequency.set(newFilterConfig.getHighPass());
+
+		lowPass.amplitude.set(newFilterConfig.getAmplitude());
+		bandPass.amplitude.set(newFilterConfig.getAmplitude());
+		highPass.amplitude.set(newFilterConfig.getAmplitude());
 	}
 
 	@Override
