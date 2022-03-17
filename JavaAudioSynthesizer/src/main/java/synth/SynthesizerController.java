@@ -2,6 +2,7 @@ package synth;
 
 import synth.circuits.FilterEnvelopeVoice;
 import synth.circuits.VoiceCircuits;
+import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 
 public class SynthesizerController
@@ -18,9 +19,14 @@ public class SynthesizerController
 	{
 		synthesizerPlayer.setUnitVoice(selectedVoice);
 	}
-	
+
 	public void applyFilterConfiguration(FilterConfiguration filterConfig)
 	{
 		synthesizerPlayer.applyFilterConfiguration(filterConfig);
+	}
+
+	public void applyEnvelopeConfiguration(EnvelopeConfiguration envelopeConfig)
+	{
+		synthesizerPlayer.applyEnvelopeConfiguration(envelopeConfig);
 	}
 }
