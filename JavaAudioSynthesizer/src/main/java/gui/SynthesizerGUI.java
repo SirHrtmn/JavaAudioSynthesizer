@@ -15,7 +15,7 @@ public class SynthesizerGUI extends JFrame
 	private static final long serialVersionUID = 1L;
 	private FilterConfigurationPanel filterPanel;
 	private EnvelopeConfigurationPanel envelopePanel;
-	private GUIKeyboard keyboard;
+	private KeyboardGUI keyboard;
 	private JPanel mainPanel;
 	private SynthesizerController controller;
 
@@ -53,7 +53,7 @@ public class SynthesizerGUI extends JFrame
 
 	private void initializeKeyboard()
 	{
-		keyboard = new GUIKeyboard();
+		keyboard = new KeyboardGUI();
 	}
 
 	private void initializeEnvelopePanel()

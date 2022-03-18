@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-public class GUIKeyboard extends JPanel
+public class KeyboardGUI extends JPanel
 {
 
 	private static final long serialVersionUID = 1L;
@@ -27,7 +27,7 @@ public class GUIKeyboard extends JPanel
 
 	private static final String SEMITONE_INDICATOR = "#";
 
-	public GUIKeyboard()
+	public KeyboardGUI()
 	{
 		super(new FlowLayout());
 		super.setBorder(new BevelBorder(BevelBorder.RAISED));
