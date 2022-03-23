@@ -1,4 +1,4 @@
-package gui;
+package gui.panels;
 
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
+import gui.VariableSlider;
 
 public abstract class ConfigurationPanel extends JPanel
 {

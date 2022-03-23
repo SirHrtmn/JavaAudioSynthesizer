@@ -1,7 +1,8 @@
-package gui;
+package gui.panels;
 
 import javax.swing.event.ChangeListener;
 
+import gui.VariableSlider;
 import synth.configuration.EnvelopeConfiguration;
 
 public class EnvelopeConfigurationPanel extends ConfigurationPanel

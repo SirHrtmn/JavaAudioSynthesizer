@@ -1,7 +1,8 @@
-package gui;
+package gui.panels;
 
 import javax.swing.event.ChangeListener;
 
+import gui.VariableSlider;
 import synth.configuration.FilterConfiguration;
 
 public class FilterConfigurationPanel extends ConfigurationPanel
