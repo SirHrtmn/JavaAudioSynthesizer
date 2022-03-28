@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import gui.listeners.NoteButtonClickListener;
-import note.Note;
+import musical.Note;
 import synth.keyboard.SynthesizerKeyboard;
 
 public class KeyboardGUI extends JPanel

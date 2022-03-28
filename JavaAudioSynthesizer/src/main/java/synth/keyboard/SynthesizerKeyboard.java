@@ -3,7 +3,7 @@ package synth.keyboard;
 import java.util.ArrayList;
 import java.util.List;
 
-import note.Note;
+import musical.Note;
 import synth.SynthesizerPlayer;
 
 public class SynthesizerKeyboard

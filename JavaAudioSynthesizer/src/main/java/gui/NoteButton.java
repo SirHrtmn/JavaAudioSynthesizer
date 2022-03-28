@@ -7,7 +7,7 @@ import java.util.List;
 import javax.swing.JButton;
 
 import gui.listeners.NoteButtonClickListener;
-import note.Note;
+import musical.Note;
 
 public class NoteButton extends JButton
 {

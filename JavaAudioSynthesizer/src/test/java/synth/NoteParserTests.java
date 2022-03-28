@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import exceptions.InvalidNoteStringException;
-import note.Note;
-import note.NoteParser;
+import musical.Note;
+import musical.NoteParser;
 
 public class NoteParserTests
 {

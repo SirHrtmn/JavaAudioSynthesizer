@@ -1,4 +1,4 @@
-package note;
+package musical;
 
 import exceptions.InvalidNoteStringException;
 
