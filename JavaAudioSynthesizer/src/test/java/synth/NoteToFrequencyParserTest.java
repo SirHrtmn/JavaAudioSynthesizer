@@ -6,9 +6,9 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import synth.keyboard.KeyboardFrequencyParser;
+import musical.NoteToFrequencyParser;
 
-public class KeyboardFrequencyParserTest
+public class NoteToFrequencyParserTest
 {
 
 	private static final double DELTA = 0.001;
@@ -110,12 +110,12 @@ public class KeyboardFrequencyParserTest
 
 	private double parseFrequency(int noteIndex)
 	{
-		return KeyboardFrequencyParser.getFrequencyFromNoteIndex(noteIndex);
+		return NoteToFrequencyParser.getFrequencyFromNoteIndex(noteIndex);
 	}
 
 	private double parseFrequency(int octave, int semiTone)
 	{
-		return KeyboardFrequencyParser.getFrequencyFromOctaveAndSemiTone(octave,
+		return NoteToFrequencyParser.getFrequencyFromOctaveAndSemiTone(octave,
 				semiTone);
 	}
 

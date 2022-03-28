@@ -1,13 +1,13 @@
-package synth.keyboard;
+package musical;
 
-public class KeyboardFrequencyParser
+public class NoteToFrequencyParser
 {
 	private static final int LOWER_INDEX_LIMIT = 0;
 	private static final int UPPER_INDEX_LIMIT = 108;
 	private static final double EQUAL_12_TONE_TEMPERMENT = Math.pow(2, 1.0 / 12.0);
 	private static final double PITCH_FREQUENCY_NOTE_A3 = 220.0;
 
-	private KeyboardFrequencyParser()
+	private NoteToFrequencyParser()
 	{
 		// static class -> no constructor needed
 	}
