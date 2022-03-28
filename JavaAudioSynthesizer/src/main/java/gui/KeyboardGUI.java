@@ -1,35 +1,34 @@
 package gui;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
-import java.awt.GridLayout;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
+
+import gui.listeners.NoteButtonClickListener;
+import note.Note;
+import synth.keyboard.SynthesizerKeyboard;
 
 public class KeyboardGUI extends JPanel
 {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final List<String> NOTES = Arrays
-			.asList(new String[]{"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"});
-
 	private static final int BUTTON_WIDTH = 50;
 	private static final int BUTTON_HEIGHT_FULLTONE = 200;
 	private static final int BUTTON_HEIGHT_SEMITONE = 150;
 
-	private static final String SEMITONE_INDICATOR = "#";
+	private SynthesizerKeyboard keyboard;
+	private List<NoteButton> noteButtons = new ArrayList<>();
 
-	public KeyboardGUI()
+	public KeyboardGUI(SynthesizerKeyboard keyboard)
 	{
 		super(new FlowLayout());
+		this.keyboard = keyboard;
 		super.setBorder(new BevelBorder(BevelBorder.RAISED));
 
 		setupKeyboardButtons();
@@ -37,34 +36,41 @@ public class KeyboardGUI extends JPanel
 
 	private void setupKeyboardButtons()
 	{
-		for (int i = 0; i < NOTES.size(); i++)
-		{
-			String noteName = NOTES.get(i);
+		addNewButtons();
 
-			Component noteButton = getNewButton(noteName);
+		assignClickListeners();
+	}
+
+	private void addNewButtons()
+	{
+		for (Note note : Note.getNoteList())
+		{
+			NoteButton noteButton = getNewButton(note);
 			super.add(noteButton, new GridBagConstraints());
+			noteButtons.add(noteButton);
 		}
 	}
 
-	private Component getNewButton(String text)
+	private NoteButton getNewButton(Note note)
 	{
-		JButton button = new JButton(text);
-		if (text.contains(SEMITONE_INDICATOR))
+		if (note.isSharpended())
 		{
-			JPanel panel = new JPanel(new GridLayout(0, 1));
-			JLabel verticalSpace = new JLabel();
-			int verticalSpacingHeight = BUTTON_HEIGHT_FULLTONE - BUTTON_HEIGHT_SEMITONE;
-
-			button.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT_SEMITONE));
-			verticalSpace.setPreferredSize(new Dimension(BUTTON_WIDTH, verticalSpacingHeight));
-
-			panel.add(button);
-			panel.add(verticalSpace);
-
-			return panel;
+			NoteButton sharpNoteButton = new NoteButton(note);
+			sharpNoteButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT_SEMITONE));
+			return sharpNoteButton;
 		}
 
-		button.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT_FULLTONE));
-		return button;
+		NoteButton noteButton = new NoteButton(note);
+		noteButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT_FULLTONE));
+		return noteButton;
+	}
+
+	private void assignClickListeners()
+	{
+		NoteButtonClickListener listener = noteButton -> {
+			keyboard.pushButton(noteButton.getNote());
+		};
+
+		noteButtons.forEach(btn -> btn.addNoteButtonClickListener(listener));
 	}
 }

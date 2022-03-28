@@ -5,23 +5,30 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import gui.panels.EnvelopeConfigurationPanel;
+import gui.panels.FilterConfigurationPanel;
 import synth.SynthesizerController;
+import synth.SynthesizerPlayer;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
+import synth.keyboard.SynthesizerKeyboard;
 import synth.utils.DefaultConstants;
 
 public class SynthesizerGUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
+
+	private SynthesizerController controller;
+
 	private FilterConfigurationPanel filterPanel;
 	private EnvelopeConfigurationPanel envelopePanel;
 	private KeyboardGUI keyboard;
 	private JPanel mainPanel;
-	private SynthesizerController controller;
 
-	public SynthesizerGUI()
+	public SynthesizerGUI(SynthesizerController controller)
 	{
 		super("Java Audio Synthesizer");
+		this.controller = controller;
 		controller = new SynthesizerController();
 		setupGUI();
 	}
@@ -53,7 +60,8 @@ public class SynthesizerGUI extends JFrame
 
 	private void initializeKeyboard()
 	{
-		keyboard = new KeyboardGUI();
+		SynthesizerPlayer player = controller.getSynthesizerPlayer();
+		keyboard = new KeyboardGUI(new SynthesizerKeyboard(player));
 	}
 
 	private void initializeEnvelopePanel()
@@ -74,6 +82,7 @@ public class SynthesizerGUI extends JFrame
 
 	public static void main(String[] args)
 	{
-		new SynthesizerGUI();
+		SynthesizerController controller = new SynthesizerController();
+		new SynthesizerGUI(controller);
 	}
 }
