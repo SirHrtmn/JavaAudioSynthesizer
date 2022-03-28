@@ -29,4 +29,9 @@ public class SynthesizerController
 	{
 		synthesizerPlayer.applyEnvelopeConfiguration(envelopeConfig);
 	}
+
+	public SynthesizerPlayer getSynthesizerPlayer()
+	{
+		return synthesizerPlayer;
+	}
 }
