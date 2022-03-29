@@ -1,24 +1,31 @@
 package synth;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 import exceptions.InvalidNoteStringException;
-import musical.Note;
+import musical.NoteName;
 import musical.NoteParser;
 
 public class NoteParserTests
 {
 
 	@Test
-	public void testAllNoteIdentifiers()
+	public void testAllNoteNames()
 	{
-		for (String note : Note.NOTE_IDENTIFIERS)
+		for (NoteName noteName : NoteName.values())
 		{
-			Assert.assertEquals(note, identifier(note));
+			Assert.assertEquals(noteName, noteName(noteName.getName()));
 		}
+	}
+
+	@Test
+	public void testSpecialCasesInNoteNames()
+	{
+		Assert.assertEquals(NoteName.F, noteName("E#"));
+		Assert.assertEquals(NoteName.F, noteName("e#"));
+		Assert.assertEquals(NoteName.C, noteName("B#"));
+		Assert.assertEquals(NoteName.C, noteName("b#"));
 	}
 
 	@Test
@@ -26,9 +33,9 @@ public class NoteParserTests
 	{
 		for (int octave = 0; octave < 9; octave++)
 		{
-			for (String note : Note.NOTE_IDENTIFIERS)
+			for (NoteName noteName : NoteName.values())
 			{
-				Assert.assertEquals(note, identifier(note + octave));
+				Assert.assertEquals(noteName, noteName(noteName.getName() + octave));
 			}
 		}
 	}
@@ -38,27 +45,7 @@ public class NoteParserTests
 	{
 		for (int octave = 0; octave < 9; octave++)
 		{
-			final int octaveNumber = octave;
-			Note.NOTE_IDENTIFIERS.forEach(note -> {
-				Assert.assertEquals(octaveNumber, octave(note + octaveNumber));
-			});
-		}
-	}
-
-	@Test
-	public void testIsSharpened()
-	{
-		List<String> sharpenedNotes = getSharpenedNotes();
-		List<String> notSharpNotes = getNotSharpNotes();
-
-		for (String sharpNote : sharpenedNotes)
-		{
-			Assert.assertTrue(isSharp(sharpNote));
-		}
-
-		for (String noteSharpNote : notSharpNotes)
-		{
-			Assert.assertFalse(isSharp(noteSharpNote));
+			testOctave(octave);
 		}
 	}
 
@@ -67,19 +54,19 @@ public class NoteParserTests
 	{
 		testInvalidNote("Z");
 		testInvalidNote("z");
-		
+
 		testInvalidNote("CC#0");
 		testInvalidNote("CC#");
 		testInvalidNote("CC");
 		testInvalidNote("cc#0");
 		testInvalidNote("cc#");
 		testInvalidNote("cc");
-		
+
 		testInvalidNote("cb0");
 		testInvalidNote("Cb0");
 		testInvalidNote("Cb");
 		testInvalidNote("cb");
-		
+
 		testInvalidNote("C # ");
 		testInvalidNote("C # 0");
 		testInvalidNote("C 0");
@@ -97,9 +84,17 @@ public class NoteParserTests
 		testInvalidNote("");
 	}
 
-	private String identifier(String noteString)
+	private NoteName noteName(String noteString)
 	{
-		return NoteParser.getNoteIdentifier(noteString);
+		return NoteParser.getNoteName(noteString);
+	}
+
+	private void testOctave(int octave)
+	{
+		for (NoteName noteName : NoteName.values())
+		{
+			Assert.assertEquals(octave, octave(noteName.getName() + octave));
+		}
 	}
 
 	private int octave(String noteString)
@@ -107,23 +102,17 @@ public class NoteParserTests
 		return NoteParser.getOctave(noteString);
 	}
 
-	private boolean isSharp(String noteString)
-	{
-		return NoteParser.isNoteSharpened(noteString);
-	}
-
 	private void testInvalidNote(String noteString)
 	{
-		testInvalidNoteWithIdentifier(noteString);
+		testInvalidNoteWithNoteName(noteString);
 		testInvalidNoteWithOctaves(noteString);
-		testInvalidNoteWithSharpCheck(noteString);
 	}
 
-	private void testInvalidNoteWithIdentifier(String noteString)
+	private void testInvalidNoteWithNoteName(String noteString)
 	{
 		try
 		{
-			NoteParser.getNoteIdentifier(noteString);
+			NoteParser.getNoteName(noteString);
 			Assert.fail("Expected InvalidNoteStringException");
 		}
 		catch (InvalidNoteStringException e)
@@ -143,28 +132,5 @@ public class NoteParserTests
 		{
 			// Test passed
 		}
-	}
-
-	private void testInvalidNoteWithSharpCheck(String noteString)
-	{
-		try
-		{
-			NoteParser.isNoteSharpened(noteString);
-			Assert.fail("Expected InvalidNoteStringException");
-		}
-		catch (InvalidNoteStringException e)
-		{
-			// Test passed
-		}
-	}
-
-	private List<String> getSharpenedNotes()
-	{
-		return Note.NOTE_IDENTIFIERS.stream().filter(note -> note.contains("#")).toList();
-	}
-
-	private List<String> getNotSharpNotes()
-	{
-		return Note.NOTE_IDENTIFIERS.stream().filter(note -> !note.contains("#")).toList();
 	}
 }
