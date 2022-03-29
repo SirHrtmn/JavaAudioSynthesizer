@@ -12,6 +12,12 @@ public class NoteToFrequencyParser
 		// static class -> no constructor needed
 	}
 
+	public static double getFrequencyFromOctaveAndNoteName(NoteName noteName, int octave)
+	{
+		int semiTone = noteName.ordinal();
+		return getFrequencyFromOctaveAndSemiTone(octave, semiTone);
+	}
+
 	public static double getFrequencyFromNoteIndex(int noteIndex)
 	{
 		checkIndexOfNote(noteIndex);
@@ -50,10 +56,9 @@ public class NoteToFrequencyParser
 	{
 		if (octave < 0 || octave > 8)
 		{
-			throw new IndexOutOfBoundsException(
-					"Octave '" + octave + "' is out of range!");
+			throw new IndexOutOfBoundsException("Octave '" + octave + "' is out of range!");
 		}
-		
+
 		int indexIncreaseFromOctave = octave * 12;
 		return indexIncreaseFromOctave + semiTone;
 	}
