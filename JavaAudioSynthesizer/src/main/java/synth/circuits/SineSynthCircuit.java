@@ -6,9 +6,8 @@ import com.jsyn.unitgen.EnvelopeDAHDSR;
 import com.jsyn.unitgen.FilterBandPass;
 import com.jsyn.unitgen.FilterHighPass;
 import com.jsyn.unitgen.FilterLowPass;
-import com.jsyn.unitgen.FilterStateVariable;
+import com.jsyn.unitgen.PassThrough;
 import com.jsyn.unitgen.SineOscillator;
-import com.jsyn.unitgen.TunableFilter;
 import com.jsyn.unitgen.UnitOscillator;
 import com.softsynth.shared.time.TimeStamp;
 
@@ -24,7 +23,8 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	private FilterBandPass bandPass;
 	private FilterLowPass lowPass;
 	private FilterHighPass highPass;
-	private TunableFilter voiceOutput;
+	private PassThrough passThrough;
+	private PassThrough output;
 
 	public SineSynthCircuit()
 	{
@@ -46,7 +46,7 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	@Override
 	public UnitOutputPort getOutput()
 	{
-		return voiceOutput.getOutput();
+		return output.getOutput();
 	}
 
 	@Override
@@ -107,7 +107,8 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	{
 		oscillator = new SineOscillator();
 		envelope = new EnvelopeDAHDSR();
-		voiceOutput = new FilterStateVariable();
+		passThrough = new PassThrough();
+		output = new PassThrough();
 
 		bandPass = new FilterBandPass();
 		lowPass = new FilterLowPass();
@@ -121,16 +122,22 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 		super.add(bandPass);
 		super.add(lowPass);
 		super.add(highPass);
-		super.add(voiceOutput);
+		super.add(passThrough);
+		super.add(output);
 	}
 
 	private void connectUnits()
 	{
 		envelope.output.connect(oscillator.amplitude);
-		oscillator.output.connect(lowPass.input);
-		lowPass.output.connect(bandPass.input);
-		bandPass.output.connect(highPass.input);
-		highPass.output.connect(voiceOutput.input);
+		oscillator.output.connect(passThrough.input);
+
+		passThrough.output.connect(lowPass.input);
+		passThrough.output.connect(bandPass.input);
+		passThrough.output.connect(highPass.input);
+
+		lowPass.output.connect(output.input);
+		bandPass.output.connect(output.input);
+		highPass.output.connect(output.input);
 	}
 
 	private double getCurrentTime()
