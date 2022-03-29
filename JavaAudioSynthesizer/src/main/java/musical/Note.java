@@ -48,7 +48,7 @@ public class Note
 	@Override
 	public String toString()
 	{
-		return noteName.toString() + getOctave();
+		return noteName.getName() + getOctave();
 	}
 
 	public boolean isSharpended()
