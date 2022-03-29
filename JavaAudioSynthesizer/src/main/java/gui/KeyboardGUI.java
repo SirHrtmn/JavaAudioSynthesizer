@@ -68,7 +68,15 @@ public class KeyboardGUI extends JPanel
 	private void assignClickListeners()
 	{
 		NoteButtonClickListener listener = noteButton -> {
-			keyboard.pushButton(noteButton.getNote());
+			if (!noteButton.isPushed())
+			{
+				keyboard.pushButton(noteButton.getNote());
+				noteButton.setPushed(true);
+				return;
+			}
+
+			keyboard.releaseButton(noteButton.getNote());
+			noteButton.setPushed(false);
 		};
 
 		noteButtons.forEach(btn -> btn.addNoteButtonClickListener(listener));

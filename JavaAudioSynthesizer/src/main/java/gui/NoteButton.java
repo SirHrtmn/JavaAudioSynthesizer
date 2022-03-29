@@ -20,12 +20,19 @@ public class NoteButton extends JButton
 	public NoteButton(Note note)
 	{
 		this.note = note;
-		super.setText(note.toString());
-		super.addChangeListener(e -> triggerNoteButtonClickListeners());
+		this.setText(note.toString());
+		this.addActionListener(e -> triggerNoteButtonClickListeners());
 
+		setupGraphics(note);
+	}
+
+	private void setupGraphics(Note note)
+	{
+		setOpaque(true);
 		if (note.isSharpended())
 		{
-			super.setBackground(Color.GRAY);
+			setBackground(Color.BLACK);
+			return;
 		}
 	}
 
@@ -37,6 +44,12 @@ public class NoteButton extends JButton
 	public void setPushed(boolean isPushed)
 	{
 		this.isPushed = isPushed;
+		if (isPushed)
+		{
+			setForeground(Color.red);
+			return;
+		}
+		setForeground(Color.black);
 	}
 
 	public Note getNote()
