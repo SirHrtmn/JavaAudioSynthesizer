@@ -7,6 +7,8 @@ import synth.configuration.FilterConfiguration;
 
 public class DefaultConstants
 {
+	public static final int DEFAULT_OCTAVE_NUMBER = 4;
+
 	public static FilterConfiguration getFilterConfig()
 	{
 		return new FilterConfiguration(440.0, 440.0, 440.0, 1.0);

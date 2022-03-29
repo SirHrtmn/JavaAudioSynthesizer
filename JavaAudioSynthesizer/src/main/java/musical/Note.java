@@ -1,36 +1,41 @@
 package musical;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import synth.utils.DefaultConstants;
 
 public class Note
 {
-	private static final String SHARP_SIGN = "#";
-
-	public static final List<String> NOTE_IDENTIFIERS = Arrays.asList("C", "C#", "D", "D#", "E",
-			"F", "F#", "G", "G#", "A", "A#", "B");
-
 	private double frequency;
-	private String note;
-	private boolean sharpended;
+	private NoteName noteName;
 	private int octave;
 
-	public Note(String noteIdentifier)
+	public Note(String note)
 	{
-		note = noteIdentifier;
+		this(note, NoteParser.getOctave(note));
 	}
 
-	public Note(String noteName, int octave)
+	public Note(String note, int octave)
 	{
-		note = noteName;
+		this(NoteParser.getNoteName(note), octave);
+	}
+
+	public Note(NoteName noteName, int octave)
+	{
+		this.noteName = noteName;
+		this.octave = octave;
+		this.frequency = NoteToFrequencyParser.getFrequencyFromOctaveAndNoteName(noteName, octave);
 	}
 
 	public static List<Note> getNoteList()
 	{
 		List<Note> notesList = new ArrayList<>();
 
-		NOTE_IDENTIFIERS.forEach(noteName -> notesList.add(new Note(noteName)));
+		for (NoteName noteName : NoteName.values())
+		{
+			notesList.add(new Note(noteName, DefaultConstants.DEFAULT_OCTAVE_NUMBER));
+		}
 
 		return notesList;
 	}
@@ -43,13 +48,12 @@ public class Note
 	@Override
 	public String toString()
 	{
-		String noteSharp = isSharpended() ? SHARP_SIGN : "";
-		return note + noteSharp + getOctave();
+		return noteName.toString() + getOctave();
 	}
 
 	public boolean isSharpended()
 	{
-		return sharpended;
+		return noteName.isSharp();
 	}
 
 	public int getOctave()

@@ -1,11 +1,11 @@
 package musical;
 
 import exceptions.InvalidNoteStringException;
+import synth.utils.DefaultConstants;
 
 public class NoteParser
 {
 	private static final String NOTE_SCHEME_REGEX = "[a-gA-G]#?[0-8]?";
-	private static final int DEFAULT_OCTAVE_NUMBER = 4;
 	private static final int EXCLUSIVE_OCTAVE_MAXIMUM = 9;
 
 	public static String getNoteIdentifier(String noteString)
@@ -20,6 +20,40 @@ public class NoteParser
 		return noteIdentifier;
 	}
 
+	public static NoteName getNoteName(String noteString)
+	{
+		checkNoteString(noteString);
+
+		char noteBaseName = noteString.charAt(0);
+		boolean noteStringIsSharp = noteString.contains("#");
+
+		if (new String("E").equalsIgnoreCase(noteBaseName + "") && noteStringIsSharp)
+		{
+			noteBaseName = 'F';
+			noteStringIsSharp = false;
+		}
+
+		if (new String("B").equalsIgnoreCase(noteBaseName + "") && noteStringIsSharp)
+		{
+			noteBaseName = 'C';
+			noteStringIsSharp = false;
+		}
+
+		for (NoteName noteName : NoteName.values())
+		{
+			boolean noteBaseMatches = noteName.getName().contains(noteBaseName + "");
+			boolean sharpMatches = noteName.isSharp() == noteStringIsSharp;
+			if (noteBaseMatches && sharpMatches)
+			{
+				return noteName;
+			}
+		}
+
+		String messageToFormat = "Could not find matching NoteName for noteString '%s'!";
+		String formattedMessage = String.format(messageToFormat, noteString);
+		throw new InvalidNoteStringException(formattedMessage);
+	}
+
 	public static int getOctave(String noteString)
 	{
 		checkNoteString(noteString);
@@ -32,14 +66,7 @@ public class NoteParser
 			return Character.digit(octaveNumber, EXCLUSIVE_OCTAVE_MAXIMUM);
 		}
 
-		return DEFAULT_OCTAVE_NUMBER;
-	}
-
-	public static boolean isNoteSharpened(String noteString)
-	{
-		checkNoteString(noteString);
-
-		return noteString.contains("#");
+		return DefaultConstants.DEFAULT_OCTAVE_NUMBER;
 	}
 
 	private static void checkNoteString(String noteString)
