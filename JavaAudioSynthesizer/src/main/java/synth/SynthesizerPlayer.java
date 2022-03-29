@@ -4,6 +4,7 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
+import musical.Note;
 import synth.circuits.FilterEnvelopeVoice;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
@@ -48,14 +49,14 @@ public class SynthesizerPlayer
 		unitVoice.applyEnvelopeConfiguration(envConfig);
 	}
 
-	public void noteOn(double frequency, double amplitude)
+	public void noteOn(Note note, double amplitude)
 	{
-		unitVoice.noteOn(frequency, amplitude);
+		unitVoice.noteOn(note.getFrequency(), amplitude);
 	}
 
-	public void noteOn(double frequency)
+	public void noteOn(Note note)
 	{
-		noteOn(frequency, 1.0);
+		noteOn(note, 1.0);
 	}
 
 	public void noteOff()
