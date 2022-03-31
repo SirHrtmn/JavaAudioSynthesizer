@@ -19,6 +19,6 @@ public class SynthesizerKeyboard
 
 	public void releaseButton(Note note)
 	{
-		synthesizerPlayer.noteOff();
+		synthesizerPlayer.noteOff(note);
 	}
 }

@@ -7,7 +7,7 @@ import synth.configuration.FilterConfiguration;
 
 public interface FilterEnvelopeVoice extends UnitVoice
 {
-	public void noteOn(double frequence, double amplitude);
+	public void noteOn(double frequency, double amplitude);
 
 	public void noteOff();
 
