@@ -18,7 +18,7 @@ public class PlayState
 
 	public PlayState()
 	{
-		this(null, false);
+		setPlayingOff();
 	}
 
 	public boolean isPlaying()
