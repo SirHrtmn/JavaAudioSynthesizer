@@ -8,6 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import com.jsyn.JSyn;
@@ -28,7 +29,6 @@ public class SynthesizerPlayer
 
 	private Map<Synthesizer, FilterEnvelopeVoice> synthVoicePairs = new HashMap<>();
 	private Map<FilterEnvelopeVoice, PlayState> playStates = new LinkedHashMap<>();
-	private LineOut lineOut;
 	private List<NoteReleaseListener> noteReleaseListeners = new ArrayList<>();
 
 	public SynthesizerPlayer(VoiceCircuits voiceCircuit)
@@ -124,7 +124,7 @@ public class SynthesizerPlayer
 			FilterEnvelopeVoice oldestVoice = oldestVoiceOptional.get();
 			Note noteToRelease = playStates.get(oldestVoice).getNote();
 			triggerNoteReleaseListeners(noteToRelease);
-			oldestVoice.noteOff();
+			noteOff(noteToRelease);
 		}
 	}
 
@@ -149,7 +149,6 @@ public class SynthesizerPlayer
 
 	private void prepareSynthesizers(VoiceCircuits voiceCircuit, int maximumVoices)
 	{
-		this.lineOut = new LineOut();
 		for (int i = 0; i < maximumVoices; i++)
 		{
 			FilterEnvelopeVoice unitVoice = voiceCircuit.getUnit();
@@ -162,6 +161,7 @@ public class SynthesizerPlayer
 	private Synthesizer createSynthesizer(FilterEnvelopeVoice unitVoice)
 	{
 		Synthesizer synthesizer = JSyn.createSynthesizer();
+		LineOut lineOut = new LineOut();
 
 		synthesizer.setRealTime(true);
 		synthesizer.add(unitVoice.getUnitGenerator());

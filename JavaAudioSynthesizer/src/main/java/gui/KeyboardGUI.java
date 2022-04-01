@@ -5,11 +5,15 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import gui.listeners.NoteButtonClickListener;
+import gui.listeners.NoteReleaseListener;
 import musical.Note;
 import synth.keyboard.SynthesizerKeyboard;
 
@@ -32,6 +36,29 @@ public class KeyboardGUI extends JPanel
 		super.setBorder(new BevelBorder(BevelBorder.RAISED));
 
 		setupKeyboardButtons();
+		addNoteReleaseListener();
+	}
+
+	private void addNoteReleaseListener()
+	{
+		NoteReleaseListener listener = note -> {
+			Optional<NoteButton> noteButtonOptional = getMatchingNoteButton(note);
+			if (noteButtonOptional.isPresent())
+			{
+				noteButtonOptional.get().setPushed(false);
+			}
+		};
+
+		keyboard.addNoteReleaseListener(listener);
+	}
+
+	private Optional<NoteButton> getMatchingNoteButton(Note note)
+	{
+		Predicate<? super NoteButton> predicate = noteButton -> noteButton.getNote().equals(note);
+		Stream<NoteButton> filteredNoteButtonStream = noteButtons.stream().filter(predicate);
+
+		Optional<NoteButton> optionalNoteButton = filteredNoteButtonStream.findFirst();
+		return optionalNoteButton;
 	}
 
 	private void setupKeyboardButtons()
