@@ -1,5 +1,6 @@
 package synth.keyboard;
 
+import gui.listeners.NoteReleaseListener;
 import musical.Note;
 import synth.SynthesizerPlayer;
 
@@ -19,6 +20,11 @@ public class SynthesizerKeyboard
 
 	public void releaseButton(Note note)
 	{
-		synthesizerPlayer.noteOff();
+		synthesizerPlayer.noteOff(note);
+	}
+
+	public void addNoteReleaseListener(NoteReleaseListener listener)
+	{
+		synthesizerPlayer.addNoteReleaseListener(listener);
 	}
 }

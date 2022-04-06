@@ -11,8 +11,7 @@ public class SynthesizerController
 
 	public SynthesizerController()
 	{
-		FilterEnvelopeVoice defaultVoice = VoiceCircuits.SinusVoice.getUnit();
-		synthesizerPlayer = new SynthesizerPlayer(defaultVoice);
+		synthesizerPlayer = new SynthesizerPlayer(VoiceCircuits.SinusVoice);
 	}
 
 	public void setUnitVoice(FilterEnvelopeVoice selectedVoice)

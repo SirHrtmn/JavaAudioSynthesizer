@@ -7,7 +7,7 @@ import exceptions.InvalidNoteStringException;
 import musical.NoteName;
 import musical.NoteParser;
 
-public class NoteParserTests
+public class NoteParserTest
 {
 
 	@Test

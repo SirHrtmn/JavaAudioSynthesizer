@@ -1,5 +1,9 @@
 package synth.utils;
 
+import java.util.EnumMap;
+import java.util.Map;
+
+import musical.NoteName;
 import synth.circuits.FilterEnvelopeVoice;
 import synth.circuits.VoiceCircuits;
 import synth.configuration.EnvelopeConfiguration;
@@ -7,6 +11,14 @@ import synth.configuration.FilterConfiguration;
 
 public class DefaultConstants
 {
+	private DefaultConstants()
+	{
+		// To hide the public constructor
+	}
+
+	private static final String[] KEYS = new String[]{"A", "W", "S", "E", "D", "F", "T", "G", "Z",
+			"H", "U", "J"};
+
 	public static final int DEFAULT_OCTAVE_NUMBER = 4;
 
 	public static FilterConfiguration getFilterConfig()
@@ -22,5 +34,17 @@ public class DefaultConstants
 	public static FilterEnvelopeVoice getVoice()
 	{
 		return VoiceCircuits.SinusVoice.getUnit();
+	}
+
+	public static Map<NoteName, String> getKeyBindings()
+	{
+		EnumMap<NoteName, String> map = new EnumMap<>(NoteName.class);
+
+		NoteName[] noteNames = NoteName.values();
+		for (int i = 0; i < noteNames.length; i++)
+		{
+			map.put(noteNames[i], KEYS[i]);
+		}
+		return map;
 	}
 }
