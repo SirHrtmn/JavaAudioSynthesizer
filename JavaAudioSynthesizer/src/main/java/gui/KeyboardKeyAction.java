@@ -34,4 +34,8 @@ public class KeyboardKeyAction extends AbstractAction
 		this.keyboardGUI.pushNoteButton(this.note);
 	}
 
+	public boolean isConfiguredForButtonRelease()
+	{
+		return release;
+	}
 }
