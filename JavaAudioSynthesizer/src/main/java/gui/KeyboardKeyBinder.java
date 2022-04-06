@@ -2,8 +2,6 @@ package gui;
 
 import java.util.Map;
 
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
@@ -38,17 +36,8 @@ public class KeyboardKeyBinder
 
 	public void removeKeyBindings(NoteButton noteButton)
 	{
-		InputMap inputMap = noteButton.getInputMap(INPUT_MAP_CONDITION);
-		for (KeyStroke keyStroke : inputMap.allKeys())
-		{
-			inputMap.remove(keyStroke);
-		}
-
-		ActionMap actionMap = noteButton.getActionMap();
-		for (Object actionKey : actionMap.allKeys())
-		{
-			actionMap.remove(actionKey);
-		}
+		noteButton.getInputMap(INPUT_MAP_CONDITION).clear();
+		noteButton.getActionMap().clear();
 	}
 
 	private String getKey(NoteButton noteButton)
