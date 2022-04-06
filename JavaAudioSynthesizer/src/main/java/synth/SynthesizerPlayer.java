@@ -38,13 +38,20 @@ public class SynthesizerPlayer
 		addShutdownHook();
 	}
 
-	public void setUnitVoice(FilterEnvelopeVoice unitVoice)
+	public void setUnitVoice(VoiceCircuits voiceCircuit)
 	{
-		for (Synthesizer synth : synthVoicePairs.keySet())
+		for (Entry<FilterEnvelopeVoice, PlayState> playStateEntry : playStates.entrySet())
 		{
-			synthVoicePairs.replace(synth, unitVoice);
+			PlayState playState = playStateEntry.getValue();
+			if (playState.isPlaying())
+			{
+				noteOff(playState.getNote());
+			}
 		}
-		// TODO finish method
+
+		synthVoicePairs.clear();
+		playStates.clear();
+		prepareSynthesizers(voiceCircuit, DEFAULT_MAX_VOICES);
 	}
 
 	public void applyFilterConfiguration(FilterConfiguration filterConfig)
