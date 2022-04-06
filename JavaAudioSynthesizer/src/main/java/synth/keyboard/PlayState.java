@@ -11,7 +11,7 @@ public class PlayState
 	private boolean isPlaying;
 	private Date startTime = new Date(0);
 
-	public PlayState(Note note, boolean isPlaying)
+	public PlayState(Note note)
 	{
 		setPlayingOn(note);
 	}
