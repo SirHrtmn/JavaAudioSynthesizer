@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -14,6 +15,7 @@ import com.jsyn.JSyn;
 import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 
+import exceptions.VoiceNotFoundException;
 import gui.listeners.NoteReleaseListener;
 import musical.Note;
 import synth.circuits.FilterEnvelopeVoice;
@@ -57,12 +59,19 @@ public class SynthesizerPlayer
 
 	public void noteOn(Note note, double amplitude)
 	{
-		FilterEnvelopeVoice voiceUnit = getUnplayedVoice(note);
-		if (voiceUnit == null)
+		Optional<FilterEnvelopeVoice> optionalVoiceUnit = getUnplayedVoice();
+		if (optionalVoiceUnit.isEmpty())
 		{
 			releaseOldestVoice();
-			voiceUnit = getUnplayedVoice(note);
+			optionalVoiceUnit = getUnplayedVoice();
 		}
+
+		if (optionalVoiceUnit.isEmpty())
+		{
+			throw new VoiceNotFoundException();
+		}
+
+		FilterEnvelopeVoice voiceUnit = optionalVoiceUnit.get();
 		voiceUnit.noteOn(note.getFrequency(), amplitude);
 
 		playStates.get(voiceUnit).setPlayingOn(note);
@@ -75,7 +84,13 @@ public class SynthesizerPlayer
 
 	public void noteOff(Note note)
 	{
-		FilterEnvelopeVoice voice = getVoiceForNote(note);
+		Optional<FilterEnvelopeVoice> optionalVoice = getVoiceForNote(note);
+		if (optionalVoice.isEmpty())
+		{
+			return;
+		}
+
+		FilterEnvelopeVoice voice = optionalVoice.get();
 		voice.noteOff();
 		playStates.get(voice).setPlayingOff();
 	}
@@ -90,29 +105,29 @@ public class SynthesizerPlayer
 		noteReleaseListeners.forEach(listener -> listener.noteReleased(note));
 	}
 
-	private FilterEnvelopeVoice getUnplayedVoice(Note note)
+	private Optional<FilterEnvelopeVoice> getUnplayedVoice()
 	{
-		for (FilterEnvelopeVoice voice : playStates.keySet())
+		for (Entry<FilterEnvelopeVoice, PlayState> playStateEntry : playStates.entrySet())
 		{
-			if (!playStates.get(voice).isPlaying())
+			if (!playStateEntry.getValue().isPlaying())
 			{
-				return voice;
+				return Optional.of(playStateEntry.getKey());
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
-	private FilterEnvelopeVoice getVoiceForNote(Note note)
+	private Optional<FilterEnvelopeVoice> getVoiceForNote(Note note)
 	{
-		for (FilterEnvelopeVoice voice : playStates.keySet())
+		for (Entry<FilterEnvelopeVoice, PlayState> playStateEntry : playStates.entrySet())
 		{
-			PlayState playState = playStates.get(voice);
+			PlayState playState = playStateEntry.getValue();
 			if (playState.getNote() == note && playState.isPlaying())
 			{
-				return voice;
+				return Optional.of(playStateEntry.getKey());
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	private void releaseOldestVoice()
@@ -136,8 +151,7 @@ public class SynthesizerPlayer
 		};
 
 		Stream<FilterEnvelopeVoice> sortedVoices = playStates.keySet().stream().sorted(comparator);
-		Optional<FilterEnvelopeVoice> oldestVoiceOptional = sortedVoices.findFirst();
-		return oldestVoiceOptional;
+		return sortedVoices.findFirst();
 	}
 
 	private void addShutdownHook()
