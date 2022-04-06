@@ -45,6 +45,11 @@ public class Note
 		return frequency;
 	}
 
+	public NoteName getNoteName()
+	{
+		return noteName;
+	}
+
 	@Override
 	public String toString()
 	{
