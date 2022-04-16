@@ -5,7 +5,7 @@ import java.util.Map;
 
 import musical.NoteName;
 import synth.circuits.FilterEnvelopeVoice;
-import synth.circuits.VoiceCircuits;
+import synth.circuits.VoiceCircuit;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 
@@ -33,7 +33,7 @@ public class DefaultConstants
 
 	public static FilterEnvelopeVoice getVoice()
 	{
-		return VoiceCircuits.SinusVoice.getUnit();
+		return VoiceCircuit.SINUS_VOICE.getUnit();
 	}
 
 	public static Map<NoteName, String> getKeyBindings()

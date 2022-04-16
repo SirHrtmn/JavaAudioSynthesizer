@@ -1,12 +1,12 @@
 package synth.circuits;
 
-public enum VoiceCircuits
+public enum VoiceCircuit
 {
-	SinusVoice(() -> new SineSynthCircuit());
+	SINUS_VOICE(SineSynthCircuit::new);
 
 	private VoiceFactory voiceFactory;
 
-	private VoiceCircuits(VoiceFactory voiceFactory)
+	private VoiceCircuit(VoiceFactory voiceFactory)
 	{
 		this.voiceFactory = voiceFactory;
 	}

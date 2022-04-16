@@ -1,6 +1,6 @@
 package synth;
 
-import synth.circuits.VoiceCircuits;
+import synth.circuits.VoiceCircuit;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 
@@ -10,10 +10,10 @@ public class SynthesizerController
 
 	public SynthesizerController()
 	{
-		synthesizerPlayer = new SynthesizerPlayer(VoiceCircuits.SinusVoice);
+		synthesizerPlayer = new SynthesizerPlayer(VoiceCircuit.SINUS_VOICE);
 	}
 
-	public void setUnitVoice(VoiceCircuits voiceCircuit)
+	public void setUnitVoice(VoiceCircuit voiceCircuit)
 	{
 		synthesizerPlayer.setUnitVoice(voiceCircuit);
 	}

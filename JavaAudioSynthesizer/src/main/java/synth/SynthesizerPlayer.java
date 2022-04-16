@@ -19,7 +19,7 @@ import exceptions.VoiceNotFoundException;
 import gui.listeners.NoteReleaseListener;
 import musical.Note;
 import synth.circuits.FilterEnvelopeVoice;
-import synth.circuits.VoiceCircuits;
+import synth.circuits.VoiceCircuit;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synth.keyboard.PlayState;
@@ -32,13 +32,13 @@ public class SynthesizerPlayer
 	private Map<FilterEnvelopeVoice, PlayState> playStates = new LinkedHashMap<>();
 	private List<NoteReleaseListener> noteReleaseListeners = new ArrayList<>();
 
-	public SynthesizerPlayer(VoiceCircuits voiceCircuit)
+	public SynthesizerPlayer(VoiceCircuit voiceCircuit)
 	{
 		prepareSynthesizers(voiceCircuit, DEFAULT_MAX_VOICES);
 		addShutdownHook();
 	}
 
-	public void setUnitVoice(VoiceCircuits voiceCircuit)
+	public void setUnitVoice(VoiceCircuit voiceCircuit)
 	{
 		for (Entry<FilterEnvelopeVoice, PlayState> playStateEntry : playStates.entrySet())
 		{
@@ -167,7 +167,7 @@ public class SynthesizerPlayer
 		Runtime.getRuntime().addShutdownHook(new Thread(shutdownRunnable));
 	}
 
-	private void prepareSynthesizers(VoiceCircuits voiceCircuit, int maximumVoices)
+	private void prepareSynthesizers(VoiceCircuit voiceCircuit, int maximumVoices)
 	{
 		for (int i = 0; i < maximumVoices; i++)
 		{
