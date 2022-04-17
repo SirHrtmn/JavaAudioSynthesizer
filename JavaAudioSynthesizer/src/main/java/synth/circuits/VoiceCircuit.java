@@ -1,8 +1,10 @@
 package synth.circuits;
 
+import com.jsyn.unitgen.SineOscillator;
+
 public enum VoiceCircuit
 {
-	SINUS_VOICE(SineSynthCircuit::new);
+	SINUS_VOICE(() -> new OscillatorVoiceCircuit(new SineOscillator()));
 
 	private VoiceFactory voiceFactory;
 
