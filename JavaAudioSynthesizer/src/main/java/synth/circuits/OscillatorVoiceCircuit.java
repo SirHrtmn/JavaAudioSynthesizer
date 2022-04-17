@@ -14,6 +14,7 @@ import synth.configuration.ConfigurationHelper;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synth.utils.DefaultConstants;
+import synth.utils.TimeUtils;
 
 public class OscillatorVoiceCircuit extends Circuit implements FilterEnvelopeVoice
 {
@@ -65,15 +66,17 @@ public class OscillatorVoiceCircuit extends Circuit implements FilterEnvelopeVoi
 	@Override
 	public void noteOn(double frequency, double amplitude, TimeStamp timeStamp)
 	{
-		// TODO Auto-generated method stub
-
+		TimeStamp currentTime = super.getSynthesizer().createTimeStamp();
+		TimeUtils.waitUntilPointOfTime(currentTime, timeStamp);
+		noteOn(frequency, amplitude);
 	}
 
 	@Override
 	public void noteOff(TimeStamp timeStamp)
 	{
-		// TODO Auto-generated method stub
-
+		TimeStamp currentTime = super.getSynthesizer().createTimeStamp();
+		TimeUtils.waitUntilPointOfTime(currentTime, timeStamp);
+		noteOff();
 	}
 
 	@Override
