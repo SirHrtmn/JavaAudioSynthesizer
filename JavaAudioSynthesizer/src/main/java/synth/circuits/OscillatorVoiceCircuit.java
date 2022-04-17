@@ -10,6 +10,7 @@ import com.jsyn.unitgen.PassThrough;
 import com.jsyn.unitgen.UnitOscillator;
 import com.softsynth.shared.time.TimeStamp;
 
+import synth.configuration.ConfigurationHelper;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synth.utils.DefaultConstants;
@@ -18,9 +19,9 @@ public class OscillatorVoiceCircuit extends Circuit implements FilterEnvelopeVoi
 {
 	protected UnitOscillator oscillator;
 	protected EnvelopeDAHDSR envelope;
-	private FilterBandPass bandPass;
-	private FilterLowPass lowPass;
-	private FilterHighPass highPass;
+	protected FilterBandPass bandPass;
+	protected FilterLowPass lowPass;
+	protected FilterHighPass highPass;
 	private PassThrough passThrough;
 	protected PassThrough output;
 
@@ -78,15 +79,13 @@ public class OscillatorVoiceCircuit extends Circuit implements FilterEnvelopeVoi
 	@Override
 	public void applyFilterConfiguration(FilterConfiguration filterConfig)
 	{
-		// TODO Auto-generated method stub
-
+		ConfigurationHelper.applyForFilter(lowPass, bandPass, highPass, filterConfig);
 	}
 
 	@Override
 	public void applyEnvelopeConfiguration(EnvelopeConfiguration envelopeConfig)
 	{
-		// TODO Auto-generated method stub
-
+		ConfigurationHelper.applyForEnvelope(envelope, envelopeConfig);
 	}
 
 	private void initializeUnits(UnitOscillator oscillator)
