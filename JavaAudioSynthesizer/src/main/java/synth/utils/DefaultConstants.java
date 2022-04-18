@@ -33,7 +33,7 @@ public class DefaultConstants
 
 	public static FilterEnvelopeVoice getVoice()
 	{
-		return VoiceCircuit.SINUS_VOICE.getUnit();
+		return VoiceCircuit.SINUS.getUnit();
 	}
 
 	public static Map<NoteName, String> getKeyBindings()
