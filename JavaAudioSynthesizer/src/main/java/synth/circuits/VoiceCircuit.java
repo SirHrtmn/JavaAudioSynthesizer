@@ -4,14 +4,13 @@ import com.jsyn.unitgen.PulseOscillator;
 import com.jsyn.unitgen.SawtoothOscillator;
 import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.TriangleOscillator;
-import com.jsyn.unitgen.UnitOscillator;
 
 public enum VoiceCircuit
 {
-	SINUS(buildVoiceFactory(new SineOscillator())),
-	SAWTOOTH(buildVoiceFactory(new SawtoothOscillator())),
-	PULSE(buildVoiceFactory(new PulseOscillator())),
-	TRIANGLE(buildVoiceFactory(new TriangleOscillator()));
+	SINUS(() -> new OscillatorVoiceCircuit(new SineOscillator())),
+	SAWTOOTH(() -> new OscillatorVoiceCircuit(new SawtoothOscillator())),
+	PULSE(() -> new OscillatorVoiceCircuit(new PulseOscillator())),
+	TRIANGLE(() -> new OscillatorVoiceCircuit(new TriangleOscillator()));
 
 	private VoiceFactory voiceFactory;
 
@@ -23,10 +22,5 @@ public enum VoiceCircuit
 	public FilterEnvelopeVoice getUnit()
 	{
 		return voiceFactory.buildVoice();
-	}
-
-	private static VoiceFactory buildVoiceFactory(UnitOscillator oscillator)
-	{
-		return () -> new OscillatorVoiceCircuit(oscillator);
 	}
 }
