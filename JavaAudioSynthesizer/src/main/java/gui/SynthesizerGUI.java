@@ -31,7 +31,6 @@ public class SynthesizerGUI extends JFrame
 	{
 		super("Java Audio Synthesizer");
 		this.controller = controller;
-		controller = new SynthesizerController();
 		setupGUI();
 	}
 
