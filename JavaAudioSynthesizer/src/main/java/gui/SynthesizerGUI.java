@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import gui.panels.EnvelopeConfigurationPanel;
 import gui.panels.FilterConfigurationPanel;
+import gui.panels.VoiceSelectionPanel;
 import synth.SynthesizerController;
 import synth.SynthesizerPlayer;
 import synth.configuration.EnvelopeConfiguration;
@@ -24,6 +25,7 @@ public class SynthesizerGUI extends JFrame
 	private EnvelopeConfigurationPanel envelopePanel;
 	private KeyboardGUI keyboard;
 	private JPanel mainPanel;
+	private VoiceSelectionPanel voiceSelectionPanel;
 
 	public SynthesizerGUI(SynthesizerController controller)
 	{
@@ -41,6 +43,7 @@ public class SynthesizerGUI extends JFrame
 		initializeFilterPanel();
 		initializeEnvelopePanel();
 		initializeKeyboard();
+		initializeVoiceSelectionPanel();
 
 		setupMainPanel();
 
@@ -56,6 +59,7 @@ public class SynthesizerGUI extends JFrame
 		mainPanel.add(filterPanel, BorderLayout.EAST);
 		mainPanel.add(envelopePanel, BorderLayout.WEST);
 		mainPanel.add(keyboard, BorderLayout.SOUTH);
+		mainPanel.add(voiceSelectionPanel, BorderLayout.NORTH);
 	}
 
 	private void initializeKeyboard()
@@ -78,6 +82,12 @@ public class SynthesizerGUI extends JFrame
 		filterPanel = new FilterConfigurationPanel(filterConfig);
 		filterPanel.addChangeListener(
 				e -> controller.applyFilterConfiguration(filterPanel.getConfig()));
+	}
+
+	private void initializeVoiceSelectionPanel()
+	{
+		voiceSelectionPanel = new VoiceSelectionPanel();
+		voiceSelectionPanel.addVoiceSelectionListener(voice -> controller.setUnitVoice(voice));
 	}
 
 	public static void main(String[] args)

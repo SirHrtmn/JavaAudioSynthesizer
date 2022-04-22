@@ -7,35 +7,36 @@ import com.jsyn.unitgen.FilterBandPass;
 import com.jsyn.unitgen.FilterHighPass;
 import com.jsyn.unitgen.FilterLowPass;
 import com.jsyn.unitgen.PassThrough;
-import com.jsyn.unitgen.SineOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 import com.softsynth.shared.time.TimeStamp;
 
+import synth.configuration.ConfigurationHelper;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synth.utils.DefaultConstants;
 import synth.utils.TimeUtils;
 
-public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
+public class OscillatorVoiceCircuit extends Circuit implements FilterEnvelopeVoice
 {
-	private UnitOscillator oscillator;
-	private EnvelopeDAHDSR envelope;
-	private FilterBandPass bandPass;
-	private FilterLowPass lowPass;
-	private FilterHighPass highPass;
+	protected UnitOscillator oscillator;
+	protected EnvelopeDAHDSR envelope;
+	protected FilterBandPass bandPass;
+	protected FilterLowPass lowPass;
+	protected FilterHighPass highPass;
 	private PassThrough passThrough;
-	private PassThrough output;
+	protected PassThrough output;
 
-	public SineSynthCircuit()
+	public OscillatorVoiceCircuit(UnitOscillator oscillator)
 	{
-		this(DefaultConstants.getFilterConfig(), DefaultConstants.getEnvelopeConfig());
+		this(oscillator, DefaultConstants.getFilterConfig(), DefaultConstants.getEnvelopeConfig());
 	}
 
-	public SineSynthCircuit(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	public OscillatorVoiceCircuit(UnitOscillator oscillator, FilterConfiguration filterConfig,
+			EnvelopeConfiguration envConfig)
 	{
 		super();
 
-		initializeUnits();
+		initializeUnits(oscillator);
 		addUnits();
 		connectUnits();
 
@@ -63,49 +64,36 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 	}
 
 	@Override
-	public void applyFilterConfiguration(FilterConfiguration newFilterConfig)
+	public void noteOn(double frequency, double amplitude, TimeStamp timeStamp)
 	{
-		lowPass.frequency.set(newFilterConfig.getLowPass());
-		bandPass.frequency.set(newFilterConfig.getBandPass());
-		highPass.frequency.set(newFilterConfig.getHighPass());
-
-		lowPass.amplitude.set(newFilterConfig.getAmplitude());
-		bandPass.amplitude.set(newFilterConfig.getAmplitude());
-		highPass.amplitude.set(newFilterConfig.getAmplitude());
+		TimeStamp currentTime = super.getSynthesizer().createTimeStamp();
+		TimeUtils.waitUntilPointOfTime(currentTime, timeStamp);
+		noteOn(frequency, amplitude);
 	}
 
 	@Override
-	public void applyEnvelopeConfiguration(EnvelopeConfiguration newEnvelopeConfig)
+	public void noteOff(TimeStamp timeStamp)
 	{
-		envelope.attack.set(newEnvelopeConfig.getAttack());
-		envelope.decay.set(newEnvelopeConfig.getDecay());
-		envelope.delay.set(newEnvelopeConfig.getDelay());
-		envelope.hold.set(newEnvelopeConfig.getHold());
-		envelope.release.set(newEnvelopeConfig.getRelease());
+		TimeStamp currentTime = super.getSynthesizer().createTimeStamp();
+		TimeUtils.waitUntilPointOfTime(currentTime, timeStamp);
+		noteOff();
 	}
 
 	@Override
-	public void noteOn(double frequency, double amplitude, TimeStamp startTime)
+	public void applyFilterConfiguration(FilterConfiguration filterConfig)
 	{
-		oscillator.frequency.set(frequency);
-		oscillator.amplitude.set(amplitude);
-
-		TimeUtils.waitUntilPointOfTime(getCurrentTime(), startTime);
-
-		envelope.amplitude.set(amplitude);
+		ConfigurationHelper.applyForFilter(lowPass, bandPass, highPass, filterConfig);
 	}
 
 	@Override
-	public void noteOff(TimeStamp stopTime)
+	public void applyEnvelopeConfiguration(EnvelopeConfiguration envelopeConfig)
 	{
-		TimeUtils.waitUntilPointOfTime(getCurrentTime(), stopTime);
-
-		envelope.amplitude.set(0.0);
+		ConfigurationHelper.applyForEnvelope(envelope, envelopeConfig);
 	}
 
-	private void initializeUnits()
+	private void initializeUnits(UnitOscillator oscillator)
 	{
-		oscillator = new SineOscillator();
+		this.oscillator = oscillator;
 		envelope = new EnvelopeDAHDSR();
 		passThrough = new PassThrough();
 		output = new PassThrough();
@@ -138,10 +126,5 @@ public class SineSynthCircuit extends Circuit implements FilterEnvelopeVoice
 		lowPass.output.connect(output.input);
 		bandPass.output.connect(output.input);
 		highPass.output.connect(output.input);
-	}
-
-	private double getCurrentTime()
-	{
-		return oscillator.getSynthesizer().getCurrentTime();
 	}
 }

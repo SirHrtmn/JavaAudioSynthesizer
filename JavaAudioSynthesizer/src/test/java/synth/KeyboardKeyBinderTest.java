@@ -18,7 +18,7 @@ import gui.NoteButton;
 import musical.Note;
 import synth.keyboard.SynthesizerKeyboard;
 
-public class KeyboardKeyBinderTests
+public class KeyboardKeyBinderTest
 {
 
 	private KeyboardGUI keyboardGUIMock;

@@ -10,7 +10,7 @@ public class SynthesizerController
 
 	public SynthesizerController()
 	{
-		synthesizerPlayer = new SynthesizerPlayer(VoiceCircuit.SINUS_VOICE);
+		synthesizerPlayer = new SynthesizerPlayer(VoiceCircuit.SINUS);
 	}
 
 	public void setUnitVoice(VoiceCircuit voiceCircuit)
