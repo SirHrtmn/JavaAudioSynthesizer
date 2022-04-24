@@ -1,5 +1,7 @@
 package synthesis.jsyn.synthesizers;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.jsyn.JSyn;
@@ -11,10 +13,14 @@ import musical.Note;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synthesis.ISynthesizer;
+import synthesis.OscillatorType;
 import synthesis.jsyn.OscillatorCircuit;
 
 public abstract class JSynSynthesizer implements ISynthesizer
 {
+	private static Map<OscillatorType, JSynBuilder> synthForOscillator = new EnumMap<>(
+			OscillatorType.class);
+
 	private OscillatorCircuit oscillatorCircuit;
 	private Synthesizer synthesizer;
 	private Optional<Note> currentlyPlaying = Optional.empty();
@@ -27,11 +33,20 @@ public abstract class JSynSynthesizer implements ISynthesizer
 
 	protected abstract UnitOscillator getOscillator();
 
-	private void initializeSynthesizer(FilterConfiguration filterConfig,
-			EnvelopeConfiguration envConfig)
+	protected static void registerJSynSynthesizer(OscillatorType type, JSynBuilder builder)
 	{
-		oscillatorCircuit = new OscillatorCircuit(getOscillator(), filterConfig, envConfig);
-		synthesizer = createSynthesizer(oscillatorCircuit);
+		synthForOscillator.put(type, builder);
+	}
+
+	public static Optional<ISynthesizer> getSynthesizer(OscillatorType type,
+			FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	{
+		JSynBuilder builder = synthForOscillator.get(type);
+		if (builder != null)
+		{
+			return Optional.of(builder.build(filterConfig, envConfig));
+		}
+		return Optional.empty();
 	}
 
 	@Override
@@ -66,6 +81,13 @@ public abstract class JSynSynthesizer implements ISynthesizer
 		oscillatorCircuit.applyFilterConfiguration(filterConfig);
 	}
 
+	private void initializeSynthesizer(FilterConfiguration filterConfig,
+			EnvelopeConfiguration envConfig)
+	{
+		oscillatorCircuit = new OscillatorCircuit(getOscillator(), filterConfig, envConfig);
+		synthesizer = createSynthesizer(oscillatorCircuit);
+	}
+
 	private void addShutdownHook()
 	{
 		Runtime.getRuntime().addShutdownHook(new Thread(synthesizer::stop));
@@ -75,17 +97,17 @@ public abstract class JSynSynthesizer implements ISynthesizer
 	{
 		Synthesizer newSynthesizer = JSyn.createSynthesizer();
 		LineOut lineOut = new LineOut();
-	
+
 		newSynthesizer.setRealTime(true);
 		newSynthesizer.add(unitCircuit);
 		newSynthesizer.add(lineOut);
-	
+
 		unitCircuit.getOutput().connect(0, lineOut.input, 0);
 		unitCircuit.getOutput().connect(0, lineOut.input, 1);
-	
+
 		newSynthesizer.start();
 		newSynthesizer.startUnit(lineOut);
-	
+
 		return newSynthesizer;
 	}
 }
