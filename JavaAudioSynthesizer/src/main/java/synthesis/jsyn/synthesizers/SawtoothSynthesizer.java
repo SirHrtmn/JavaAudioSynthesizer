@@ -9,7 +9,15 @@ import synthesis.OscillatorType;
 
 public class SawtoothSynthesizer extends JSynSynthesizer
 {
-	public SawtoothSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	private static final OscillatorType TYPE = OscillatorType.SAWTOOTH;
+
+	static
+	{
+		JSynSynthesizer.registerJSynSynthesizer(TYPE,
+				(filterConfig, envConfig) -> new SawtoothSynthesizer(filterConfig, envConfig));
+	}
+
+	private SawtoothSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super(filterConfig, envConfig);
 	}
@@ -17,7 +25,7 @@ public class SawtoothSynthesizer extends JSynSynthesizer
 	@Override
 	public OscillatorType getOscillatorType()
 	{
-		return OscillatorType.SAWTOOTH;
+		return TYPE;
 	}
 
 	@Override

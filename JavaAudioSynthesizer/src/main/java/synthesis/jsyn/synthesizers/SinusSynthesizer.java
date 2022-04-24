@@ -9,7 +9,15 @@ import synthesis.OscillatorType;
 
 public class SinusSynthesizer extends JSynSynthesizer
 {
-	public SinusSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	private static final OscillatorType TYPE = OscillatorType.SINUS;
+
+	static
+	{
+		JSynSynthesizer.registerJSynSynthesizer(TYPE,
+				(filterConfig, envConfig) -> new SinusSynthesizer(filterConfig, envConfig));
+	}
+
+	private SinusSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super(filterConfig, envConfig);
 	}
@@ -17,7 +25,7 @@ public class SinusSynthesizer extends JSynSynthesizer
 	@Override
 	public OscillatorType getOscillatorType()
 	{
-		return OscillatorType.SINUS;
+		return TYPE;
 	}
 
 	@Override

@@ -9,7 +9,15 @@ import synthesis.OscillatorType;
 
 public class SquareSynthesizer extends JSynSynthesizer
 {
-	public SquareSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	private static final OscillatorType SQUARE = OscillatorType.SQUARE;
+
+	static
+	{
+		JSynSynthesizer.registerJSynSynthesizer(SQUARE,
+				(filterConfig, envConfig) -> new SquareSynthesizer(filterConfig, envConfig));
+	}
+
+	private SquareSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super(filterConfig, envConfig);
 	}
@@ -17,7 +25,7 @@ public class SquareSynthesizer extends JSynSynthesizer
 	@Override
 	public OscillatorType getOscillatorType()
 	{
-		return OscillatorType.SQUARE;
+		return SQUARE;
 	}
 
 	@Override
