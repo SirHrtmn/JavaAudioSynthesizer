@@ -1,4 +1,4 @@
-package synth.keyboard;
+package controlling;
 
 import java.util.Calendar;
 import java.util.Date;

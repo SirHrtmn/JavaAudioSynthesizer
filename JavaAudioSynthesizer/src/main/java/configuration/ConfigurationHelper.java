@@ -1,4 +1,4 @@
-package synth.configuration;
+package configuration;
 
 import com.jsyn.unitgen.EnvelopeDAHDSR;
 import com.jsyn.unitgen.FilterBandPass;

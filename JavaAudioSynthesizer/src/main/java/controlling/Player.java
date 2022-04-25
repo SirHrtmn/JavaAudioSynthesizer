@@ -1,4 +1,4 @@
-package synth;
+package controlling;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,12 +10,11 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import exceptions.SynthesizerNotFoundException;
 import gui.listeners.NoteReleaseListener;
 import musical.Note;
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
-import synth.keyboard.PlayState;
 import synthesis.ISynthesizer;
 import synthesis.OscillatorType;
 import synthesis.SynthesizerFactory;

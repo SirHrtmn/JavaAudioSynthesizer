@@ -1,9 +1,9 @@
-package synth;
+package controlling;
 
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
-import synth.utils.DefaultConstants;
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import synthesis.OscillatorType;
+import utils.DefaultConstants;
 
 public class Controller
 {

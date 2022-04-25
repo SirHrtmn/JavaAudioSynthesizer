@@ -1,8 +1,7 @@
-package synth.keyboard;
+package controlling;
 
 import gui.listeners.NoteReleaseListener;
 import musical.Note;
-import synth.Player;
 
 public class Keyboard
 {

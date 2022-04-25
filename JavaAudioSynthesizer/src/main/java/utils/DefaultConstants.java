@@ -1,11 +1,11 @@
-package synth.utils;
+package utils;
 
 import java.util.EnumMap;
 import java.util.Map;
 
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import musical.NoteName;
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
 import synthesis.OscillatorType;
 
 public class DefaultConstants

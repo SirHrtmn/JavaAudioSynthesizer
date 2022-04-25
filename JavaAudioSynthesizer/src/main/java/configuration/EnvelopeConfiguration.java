@@ -1,4 +1,4 @@
-package synth.configuration;
+package configuration;
 
 public class EnvelopeConfiguration
 {
