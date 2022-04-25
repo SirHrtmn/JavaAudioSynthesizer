@@ -1,21 +1,22 @@
 package synth;
 
-import synth.circuits.VoiceCircuit;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
+import synth.utils.DefaultConstants;
+import synthesis.OscillatorType;
 
-public class SynthesizerController
+public class Controller
 {
-	private SynthesizerPlayer synthesizerPlayer;
+	private Player synthesizerPlayer;
 
-	public SynthesizerController()
+	public Controller()
 	{
-		synthesizerPlayer = new SynthesizerPlayer(VoiceCircuit.SINUS);
+		synthesizerPlayer = new Player(DefaultConstants.getOscillatorType());
 	}
 
-	public void setUnitVoice(VoiceCircuit voiceCircuit)
+	public void setOscillatorType(OscillatorType type)
 	{
-		synthesizerPlayer.setUnitVoice(voiceCircuit);
+		synthesizerPlayer.setOscillatorType(type);
 	}
 
 	public void applyFilterConfiguration(FilterConfiguration filterConfig)
@@ -28,7 +29,7 @@ public class SynthesizerController
 		synthesizerPlayer.applyEnvelopeConfiguration(envelopeConfig);
 	}
 
-	public SynthesizerPlayer getSynthesizerPlayer()
+	public Player getSynthesizerPlayer()
 	{
 		return synthesizerPlayer;
 	}
