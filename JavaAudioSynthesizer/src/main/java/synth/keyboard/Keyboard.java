@@ -2,13 +2,13 @@ package synth.keyboard;
 
 import gui.listeners.NoteReleaseListener;
 import musical.Note;
-import synth.SynthesizerPlayer;
+import synth.Player;
 
-public class SynthesizerKeyboard
+public class Keyboard
 {
-	private SynthesizerPlayer synthesizerPlayer;
+	private Player synthesizerPlayer;
 
-	public SynthesizerKeyboard(SynthesizerPlayer synthesizerPlayer)
+	public Keyboard(Player synthesizerPlayer)
 	{
 		this.synthesizerPlayer = synthesizerPlayer;
 	}
