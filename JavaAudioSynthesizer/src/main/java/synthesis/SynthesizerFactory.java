@@ -1,15 +1,31 @@
 package synthesis;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.Optional;
 
 import exceptions.SynthesizerNotFoundException;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synth.utils.DefaultConstants;
-import synthesis.jsyn.synthesizers.JSynSynthesizer;
+import synthesis.jsyn.synthesizers.SawtoothSynthesizer;
+import synthesis.jsyn.synthesizers.SinusSynthesizer;
+import synthesis.jsyn.synthesizers.SquareSynthesizer;
+import synthesis.jsyn.synthesizers.TriangleSynthesizer;
 
 public class SynthesizerFactory
 {
+	private static Map<OscillatorType, SynthBuilder> synthPerOscillatorType;
+
+	static
+	{
+		synthPerOscillatorType = new EnumMap<>(OscillatorType.class);
+		synthPerOscillatorType.put(OscillatorType.SINUS, SinusSynthesizer::new);
+		synthPerOscillatorType.put(OscillatorType.SQUARE, SquareSynthesizer::new);
+		synthPerOscillatorType.put(OscillatorType.SAWTOOTH, SawtoothSynthesizer::new);
+		synthPerOscillatorType.put(OscillatorType.TRIANGLE, TriangleSynthesizer::new);
+	}
+
 	private SynthesizerFactory()
 	{
 		// Hide the public constructor
@@ -26,19 +42,19 @@ public class SynthesizerFactory
 	public static ISynthesizer build(OscillatorType type, FilterConfiguration filterConfig,
 			EnvelopeConfiguration envConfig)
 	{
-		Optional<ISynthesizer> optionalSynth = getSynthesizer(type, filterConfig, envConfig);
-		if (optionalSynth.isPresent())
+		Optional<SynthBuilder> optionalBuilder = getSynthesizerBuilder(type);
+		if (optionalBuilder.isPresent())
 		{
-			return optionalSynth.get();
+			SynthBuilder builder = optionalBuilder.get();
+			return builder.build(filterConfig, envConfig);
 		}
 
 		String message = String.format("Could not find synthesizer for %s", type.toString());
 		throw new SynthesizerNotFoundException(message);
 	}
 
-	private static Optional<ISynthesizer> getSynthesizer(OscillatorType type,
-			FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	private static Optional<SynthBuilder> getSynthesizerBuilder(OscillatorType type)
 	{
-		return JSynSynthesizer.getSynthesizer(type, filterConfig, envConfig);
+		return Optional.ofNullable(synthPerOscillatorType.get(type));
 	}
 }

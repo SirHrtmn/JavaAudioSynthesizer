@@ -1,7 +1,5 @@
 package synthesis.jsyn.synthesizers;
 
-import java.util.EnumMap;
-import java.util.Map;
 import java.util.Optional;
 
 import com.jsyn.JSyn;
@@ -13,14 +11,10 @@ import musical.Note;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
 import synthesis.ISynthesizer;
-import synthesis.OscillatorType;
 import synthesis.jsyn.OscillatorCircuit;
 
 public abstract class JSynSynthesizer implements ISynthesizer
 {
-	private static Map<OscillatorType, JSynBuilder> synthForOscillator = new EnumMap<>(
-			OscillatorType.class);
-
 	private OscillatorCircuit oscillatorCircuit;
 	private Synthesizer synthesizer;
 	private Optional<Note> currentlyPlaying = Optional.empty();
@@ -32,22 +26,6 @@ public abstract class JSynSynthesizer implements ISynthesizer
 	}
 
 	protected abstract UnitOscillator getOscillator();
-
-	protected static void registerJSynSynthesizer(OscillatorType type, JSynBuilder builder)
-	{
-		synthForOscillator.put(type, builder);
-	}
-
-	public static Optional<ISynthesizer> getSynthesizer(OscillatorType type,
-			FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
-	{
-		JSynBuilder builder = synthForOscillator.get(type);
-		if (builder != null)
-		{
-			return Optional.of(builder.build(filterConfig, envConfig));
-		}
-		return Optional.empty();
-	}
 
 	@Override
 	public void noteOn(Note note)

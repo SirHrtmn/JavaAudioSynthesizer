@@ -11,13 +11,7 @@ public class SquareSynthesizer extends JSynSynthesizer
 {
 	private static final OscillatorType SQUARE = OscillatorType.SQUARE;
 
-	static
-	{
-		JSynSynthesizer.registerJSynSynthesizer(SQUARE,
-				(filterConfig, envConfig) -> new SquareSynthesizer(filterConfig, envConfig));
-	}
-
-	private SquareSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	public SquareSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super(filterConfig, envConfig);
 	}

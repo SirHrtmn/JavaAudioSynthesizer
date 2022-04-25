@@ -11,13 +11,7 @@ public class SinusSynthesizer extends JSynSynthesizer
 {
 	private static final OscillatorType TYPE = OscillatorType.SINUS;
 
-	static
-	{
-		JSynSynthesizer.registerJSynSynthesizer(TYPE,
-				(filterConfig, envConfig) -> new SinusSynthesizer(filterConfig, envConfig));
-	}
-
-	private SinusSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	public SinusSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super(filterConfig, envConfig);
 	}

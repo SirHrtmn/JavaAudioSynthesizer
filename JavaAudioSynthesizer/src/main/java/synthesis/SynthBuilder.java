@@ -1,9 +1,10 @@
-package synthesis.jsyn.synthesizers;
+package synthesis;
 
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
+import synthesis.jsyn.synthesizers.JSynSynthesizer;
 
-public interface JSynBuilder
+public interface SynthBuilder
 {
 	public JSynSynthesizer build(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig);
 }

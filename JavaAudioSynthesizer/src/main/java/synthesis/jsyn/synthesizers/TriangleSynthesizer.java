@@ -9,13 +9,7 @@ import synthesis.OscillatorType;
 
 public class TriangleSynthesizer extends JSynSynthesizer
 {
-	static
-	{
-		JSynSynthesizer.registerJSynSynthesizer(OscillatorType.TRIANGLE,
-				(filterConfig, envConfig) -> new TriangleSynthesizer(filterConfig, envConfig));
-	}
-
-	private TriangleSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	public TriangleSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super(filterConfig, envConfig);
 	}

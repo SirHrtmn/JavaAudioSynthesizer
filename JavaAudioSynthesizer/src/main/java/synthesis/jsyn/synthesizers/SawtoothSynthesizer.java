@@ -11,13 +11,7 @@ public class SawtoothSynthesizer extends JSynSynthesizer
 {
 	private static final OscillatorType TYPE = OscillatorType.SAWTOOTH;
 
-	static
-	{
-		JSynSynthesizer.registerJSynSynthesizer(TYPE,
-				(filterConfig, envConfig) -> new SawtoothSynthesizer(filterConfig, envConfig));
-	}
-
-	private SawtoothSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
+	public SawtoothSynthesizer(FilterConfiguration filterConfig, EnvelopeConfiguration envConfig)
 	{
 		super(filterConfig, envConfig);
 	}
