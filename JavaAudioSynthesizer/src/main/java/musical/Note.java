@@ -25,7 +25,7 @@ public class Note
 	{
 		this.noteName = noteName;
 		this.octave = octave;
-		this.frequency = NoteToFrequencyParser.getFrequencyFromOctaveAndNoteName(noteName, octave);
+		this.frequency = FrequencyParser.getFrequencyFromOctaveAndNoteName(noteName, octave);
 	}
 
 	public static List<Note> getNoteList()

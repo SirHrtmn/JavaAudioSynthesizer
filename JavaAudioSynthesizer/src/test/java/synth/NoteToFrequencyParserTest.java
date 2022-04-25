@@ -6,7 +6,7 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import musical.NoteToFrequencyParser;
+import musical.FrequencyParser;
 
 public class NoteToFrequencyParserTest
 {
@@ -110,12 +110,12 @@ public class NoteToFrequencyParserTest
 
 	private double parseFrequency(int noteIndex)
 	{
-		return NoteToFrequencyParser.getFrequencyFromNoteIndex(noteIndex);
+		return FrequencyParser.getFrequencyFromNoteIndex(noteIndex);
 	}
 
 	private double parseFrequency(int octave, int semiTone)
 	{
-		return NoteToFrequencyParser.getFrequencyFromOctaveAndSemiTone(octave,
+		return FrequencyParser.getFrequencyFromOctaveAndSemiTone(octave,
 				semiTone);
 	}
 
