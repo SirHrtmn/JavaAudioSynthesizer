@@ -4,10 +4,9 @@ import java.util.EnumMap;
 import java.util.Map;
 
 import musical.NoteName;
-import synth.circuits.FilterEnvelopeVoice;
-import synth.circuits.VoiceCircuit;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
+import synthesis.OscillatorType;
 
 public class DefaultConstants
 {
@@ -31,9 +30,9 @@ public class DefaultConstants
 		return new EnvelopeConfiguration(0.0, 0.2, 1.0, 1.0, 0.2);
 	}
 
-	public static FilterEnvelopeVoice getVoice()
+	public static OscillatorType getOscillatorType()
 	{
-		return VoiceCircuit.SINUS.getUnit();
+		return OscillatorType.SINUS;
 	}
 
 	public static Map<NoteName, String> getKeyBindings()

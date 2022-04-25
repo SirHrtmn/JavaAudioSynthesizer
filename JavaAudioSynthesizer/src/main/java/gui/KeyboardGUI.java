@@ -17,7 +17,7 @@ import javax.swing.border.BevelBorder;
 import gui.listeners.NoteButtonClickListener;
 import gui.listeners.NoteReleaseListener;
 import musical.Note;
-import synth.keyboard.SynthesizerKeyboard;
+import synth.keyboard.Keyboard;
 
 public class KeyboardGUI extends JPanel
 {
@@ -28,13 +28,13 @@ public class KeyboardGUI extends JPanel
 	private static final int BUTTON_HEIGHT_FULLTONE = 200;
 	private static final int BUTTON_HEIGHT_SEMITONE = 150;
 
-	private SynthesizerKeyboard keyboard;
+	private Keyboard keyboard;
 	private List<NoteButton> noteButtons = new ArrayList<>();
 	private KeyboardKeyBinder keyBinder = new KeyboardKeyBinder(this);
 
 	private boolean configuredKeyListeners;
 
-	public KeyboardGUI(SynthesizerKeyboard keyboard)
+	public KeyboardGUI(Keyboard keyboard)
 	{
 		super(new FlowLayout());
 		this.keyboard = keyboard;

@@ -7,27 +7,27 @@ import javax.swing.JPanel;
 
 import gui.panels.EnvelopeConfigurationPanel;
 import gui.panels.FilterConfigurationPanel;
-import gui.panels.VoiceSelectionPanel;
-import synth.SynthesizerController;
-import synth.SynthesizerPlayer;
+import gui.panels.OscillatorSelectionPanel;
+import synth.Controller;
+import synth.Player;
 import synth.configuration.EnvelopeConfiguration;
 import synth.configuration.FilterConfiguration;
-import synth.keyboard.SynthesizerKeyboard;
+import synth.keyboard.Keyboard;
 import synth.utils.DefaultConstants;
 
 public class SynthesizerGUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
 
-	private SynthesizerController controller;
+	private Controller controller;
 
 	private FilterConfigurationPanel filterPanel;
 	private EnvelopeConfigurationPanel envelopePanel;
 	private KeyboardGUI keyboard;
 	private JPanel mainPanel;
-	private VoiceSelectionPanel voiceSelectionPanel;
+	private OscillatorSelectionPanel selectionPanel;
 
-	public SynthesizerGUI(SynthesizerController controller)
+	public SynthesizerGUI(Controller controller)
 	{
 		super("Java Audio Synthesizer");
 		this.controller = controller;
@@ -58,13 +58,13 @@ public class SynthesizerGUI extends JFrame
 		mainPanel.add(filterPanel, BorderLayout.EAST);
 		mainPanel.add(envelopePanel, BorderLayout.WEST);
 		mainPanel.add(keyboard, BorderLayout.SOUTH);
-		mainPanel.add(voiceSelectionPanel, BorderLayout.NORTH);
+		mainPanel.add(selectionPanel, BorderLayout.NORTH);
 	}
 
 	private void initializeKeyboard()
 	{
-		SynthesizerPlayer player = controller.getSynthesizerPlayer();
-		keyboard = new KeyboardGUI(new SynthesizerKeyboard(player));
+		Player player = controller.getSynthesizerPlayer();
+		keyboard = new KeyboardGUI(new Keyboard(player));
 	}
 
 	private void initializeEnvelopePanel()
@@ -85,13 +85,13 @@ public class SynthesizerGUI extends JFrame
 
 	private void initializeVoiceSelectionPanel()
 	{
-		voiceSelectionPanel = new VoiceSelectionPanel();
-		voiceSelectionPanel.addVoiceSelectionListener(voice -> controller.setUnitVoice(voice));
+		selectionPanel = new OscillatorSelectionPanel();
+		selectionPanel.addOscillatorSelectionListener(type -> controller.setOscillatorType(type));
 	}
 
 	public static void main(String[] args)
 	{
-		SynthesizerController controller = new SynthesizerController();
+		Controller controller = new Controller();
 		new SynthesizerGUI(controller);
 	}
 }

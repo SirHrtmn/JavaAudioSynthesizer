@@ -16,7 +16,7 @@ import gui.KeyboardKeyAction;
 import gui.KeyboardKeyBinder;
 import gui.NoteButton;
 import musical.Note;
-import synth.keyboard.SynthesizerKeyboard;
+import synth.keyboard.Keyboard;
 
 public class KeyboardKeyBinderTest
 {
@@ -27,7 +27,7 @@ public class KeyboardKeyBinderTest
 	@Before
 	public void setupTest()
 	{
-		keyboardGUIMock = new KeyboardGUI(mock(SynthesizerKeyboard.class));
+		keyboardGUIMock = new KeyboardGUI(mock(Keyboard.class));
 		keyBinder = new KeyboardKeyBinder(keyboardGUIMock);
 	}
 

@@ -9,16 +9,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import gui.listeners.VoiceSelectionListener;
-import synth.circuits.VoiceCircuit;
+import gui.listeners.OscillatorTypeSelectionListener;
+import synthesis.OscillatorType;
 
-public class VoiceSelectionPanel extends JPanel
+public class OscillatorSelectionPanel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
-	private JComboBox<VoiceCircuit> comboBox;
-	private List<VoiceSelectionListener> selectionListeners = new ArrayList<>();
+	private JComboBox<OscillatorType> comboBox;
+	private List<OscillatorTypeSelectionListener> selectionListeners = new ArrayList<>();
 
-	public VoiceSelectionPanel()
+	public OscillatorSelectionPanel()
 	{
 		super(new FlowLayout(FlowLayout.CENTER));
 		super.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -30,7 +30,7 @@ public class VoiceSelectionPanel extends JPanel
 	{
 		JLabel label = new JLabel("Select your voice:");
 
-		comboBox = new JComboBox<>(VoiceCircuit.values());
+		comboBox = new JComboBox<>(OscillatorType.values());
 		comboBox.setSelectedIndex(0);
 		comboBox.addActionListener(e -> triggerSelectionListeners());
 
@@ -38,21 +38,21 @@ public class VoiceSelectionPanel extends JPanel
 		this.add(comboBox);
 	}
 
-	public void addVoiceSelectionListener(VoiceSelectionListener listener)
+	public void addOscillatorSelectionListener(OscillatorTypeSelectionListener listener)
 	{
 		selectionListeners.add(listener);
 	}
 
 	private void triggerSelectionListeners()
 	{
-		for (VoiceSelectionListener selectionListener : selectionListeners)
+		for (OscillatorTypeSelectionListener selectionListener : selectionListeners)
 		{
-			selectionListener.voiceHasBeenSelected(getSelectedVoice());
+			selectionListener.oscillatorHasBeenSelected(getSelectedVoice());
 		}
 	}
 
-	private VoiceCircuit getSelectedVoice()
+	private OscillatorType getSelectedVoice()
 	{
-		return (VoiceCircuit) comboBox.getSelectedItem();
+		return (OscillatorType) comboBox.getSelectedItem();
 	}
 }

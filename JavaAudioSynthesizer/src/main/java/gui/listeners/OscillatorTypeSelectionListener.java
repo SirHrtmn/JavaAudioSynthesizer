@@ -1,8 +1,8 @@
 package gui.listeners;
 
-import synth.circuits.VoiceCircuit;
+import synthesis.OscillatorType;
 
-public interface VoiceSelectionListener
+public interface OscillatorTypeSelectionListener
 {
-	public void voiceHasBeenSelected(VoiceCircuit voice);
+	public void oscillatorHasBeenSelected(OscillatorType type);
 }
