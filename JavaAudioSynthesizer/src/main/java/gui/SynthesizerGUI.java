@@ -5,15 +5,15 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
+import controlling.Controller;
+import controlling.Keyboard;
+import controlling.Player;
 import gui.panels.EnvelopeConfigurationPanel;
 import gui.panels.FilterConfigurationPanel;
 import gui.panels.OscillatorSelectionPanel;
-import synth.Controller;
-import synth.Player;
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
-import synth.keyboard.Keyboard;
-import synth.utils.DefaultConstants;
+import utils.DefaultConstants;
 
 public class SynthesizerGUI extends JFrame
 {

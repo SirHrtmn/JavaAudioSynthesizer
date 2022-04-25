@@ -4,14 +4,14 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Optional;
 
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import exceptions.SynthesizerNotFoundException;
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
-import synth.utils.DefaultConstants;
 import synthesis.jsyn.synthesizers.SawtoothSynthesizer;
 import synthesis.jsyn.synthesizers.SinusSynthesizer;
 import synthesis.jsyn.synthesizers.SquareSynthesizer;
 import synthesis.jsyn.synthesizers.TriangleSynthesizer;
+import utils.DefaultConstants;
 
 public class SynthesizerFactory
 {

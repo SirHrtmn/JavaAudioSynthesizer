@@ -9,9 +9,9 @@ import com.jsyn.unitgen.FilterLowPass;
 import com.jsyn.unitgen.PassThrough;
 import com.jsyn.unitgen.UnitOscillator;
 
-import synth.configuration.ConfigurationHelper;
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
+import synthesis.jsyn.configuration.ConfigurationHelper;
 
 public class OscillatorCircuit extends Circuit implements UnitsCircuit
 {

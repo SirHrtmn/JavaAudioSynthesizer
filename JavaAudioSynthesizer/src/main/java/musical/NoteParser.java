@@ -1,7 +1,7 @@
 package musical;
 
 import exceptions.InvalidNoteStringException;
-import synth.utils.DefaultConstants;
+import utils.DefaultConstants;
 
 public class NoteParser
 {

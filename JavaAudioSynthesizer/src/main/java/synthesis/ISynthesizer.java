@@ -2,9 +2,9 @@ package synthesis;
 
 import java.util.Optional;
 
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import musical.Note;
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
 
 public interface ISynthesizer
 {

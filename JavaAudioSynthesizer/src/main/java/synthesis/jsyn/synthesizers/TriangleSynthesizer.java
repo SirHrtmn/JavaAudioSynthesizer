@@ -3,8 +3,8 @@ package synthesis.jsyn.synthesizers;
 import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import synthesis.OscillatorType;
 
 public class TriangleSynthesizer extends JSynSynthesizer

@@ -3,7 +3,7 @@ package musical;
 import java.util.ArrayList;
 import java.util.List;
 
-import synth.utils.DefaultConstants;
+import utils.DefaultConstants;
 
 public class Note
 {

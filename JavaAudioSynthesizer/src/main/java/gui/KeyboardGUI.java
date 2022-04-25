@@ -14,10 +14,10 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
+import controlling.Keyboard;
 import gui.listeners.NoteButtonClickListener;
 import gui.listeners.NoteReleaseListener;
 import musical.Note;
-import synth.keyboard.Keyboard;
 
 public class KeyboardGUI extends JPanel
 {

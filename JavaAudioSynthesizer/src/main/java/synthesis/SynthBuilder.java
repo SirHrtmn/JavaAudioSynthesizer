@@ -1,7 +1,7 @@
 package synthesis;
 
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import synthesis.jsyn.synthesizers.JSynSynthesizer;
 
 public interface SynthBuilder

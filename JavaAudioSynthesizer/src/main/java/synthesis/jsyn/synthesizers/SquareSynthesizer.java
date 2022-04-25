@@ -3,8 +3,8 @@ package synthesis.jsyn.synthesizers;
 import com.jsyn.unitgen.SquareOscillator;
 import com.jsyn.unitgen.UnitOscillator;
 
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import synthesis.OscillatorType;
 
 public class SquareSynthesizer extends JSynSynthesizer

@@ -6,7 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import musical.NoteName;
-import synth.utils.DefaultConstants;
+import utils.DefaultConstants;
 
 public class KeyboardKeyBinder
 {

@@ -11,12 +11,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import controlling.Keyboard;
 import gui.KeyboardGUI;
 import gui.KeyboardKeyAction;
 import gui.KeyboardKeyBinder;
 import gui.NoteButton;
 import musical.Note;
-import synth.keyboard.Keyboard;
 
 public class KeyboardKeyBinderTest
 {

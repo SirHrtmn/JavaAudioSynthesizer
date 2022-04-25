@@ -1,9 +1,12 @@
-package configuration;
+package synthesis.jsyn.configuration;
 
 import com.jsyn.unitgen.EnvelopeDAHDSR;
 import com.jsyn.unitgen.FilterBandPass;
 import com.jsyn.unitgen.FilterHighPass;
 import com.jsyn.unitgen.FilterLowPass;
+
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 
 public class ConfigurationHelper
 {

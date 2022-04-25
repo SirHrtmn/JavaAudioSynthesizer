@@ -2,8 +2,8 @@ package synthesis.jsyn;
 
 import com.jsyn.ports.UnitOutputPort;
 
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 
 public interface UnitsCircuit
 {

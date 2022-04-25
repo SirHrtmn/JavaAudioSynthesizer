@@ -7,9 +7,9 @@ import com.jsyn.Synthesizer;
 import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.UnitOscillator;
 
+import configuration.EnvelopeConfiguration;
+import configuration.FilterConfiguration;
 import musical.Note;
-import synth.configuration.EnvelopeConfiguration;
-import synth.configuration.FilterConfiguration;
 import synthesis.ISynthesizer;
 import synthesis.jsyn.OscillatorCircuit;
 
