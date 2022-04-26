@@ -5,25 +5,25 @@ import musical.Note;
 
 public class Keyboard
 {
-	private Player synthesizerPlayer;
+	private Player player;
 
-	public Keyboard(Player synthesizerPlayer)
+	public Keyboard(Player player)
 	{
-		this.synthesizerPlayer = synthesizerPlayer;
+		this.player = player;
 	}
 
 	public void pushButton(Note note)
 	{
-		synthesizerPlayer.noteOn(note);
+		player.noteOn(note);
 	}
 
 	public void releaseButton(Note note)
 	{
-		synthesizerPlayer.noteOff(note);
+		player.noteOff(note);
 	}
 
 	public void addNoteReleaseListener(NoteReleaseListener listener)
 	{
-		synthesizerPlayer.addNoteReleaseListener(listener);
+		player.addNoteReleaseListener(listener);
 	}
 }

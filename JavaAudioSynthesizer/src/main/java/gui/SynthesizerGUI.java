@@ -63,7 +63,7 @@ public class SynthesizerGUI extends JFrame
 
 	private void initializeKeyboard()
 	{
-		Player player = controller.getSynthesizerPlayer();
+		Player player = controller.getPlayer();
 		keyboard = new KeyboardGUI(new Keyboard(player));
 	}
 
