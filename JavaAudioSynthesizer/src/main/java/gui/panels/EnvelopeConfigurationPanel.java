@@ -2,8 +2,8 @@ package gui.panels;
 
 import javax.swing.event.ChangeListener;
 
+import configuration.EnvelopeConfiguration;
 import gui.VariableSlider;
-import synth.configuration.EnvelopeConfiguration;
 
 public class EnvelopeConfigurationPanel extends ConfigurationPanel
 {

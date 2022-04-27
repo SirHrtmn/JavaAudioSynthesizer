@@ -1,24 +1,17 @@
 package musical;
 
 import exceptions.InvalidNoteStringException;
-import synth.utils.DefaultConstants;
+import utils.DefaultConstants;
 
 public class NoteParser
 {
+	private NoteParser()
+	{
+		// Hide public constructor
+	}
+
 	private static final String NOTE_SCHEME_REGEX = "[a-gA-G]#?[0-8]?";
 	private static final int EXCLUSIVE_OCTAVE_MAXIMUM = 9;
-
-	public static String getNoteIdentifier(String noteString)
-	{
-		checkNoteString(noteString);
-
-		char noteName = noteString.charAt(0);
-		String sharpSign = noteString.contains("#") ? "#" : "";
-
-		String noteIdentifier = noteName + sharpSign;
-
-		return noteIdentifier;
-	}
 
 	public static NoteName getNoteName(String noteString)
 	{
@@ -27,13 +20,13 @@ public class NoteParser
 		char noteBaseName = noteString.charAt(0);
 		boolean noteStringIsSharp = noteString.contains("#");
 
-		if (new String("E").equalsIgnoreCase(noteBaseName + "") && noteStringIsSharp)
+		if ("E".equalsIgnoreCase(noteBaseName + "") && noteStringIsSharp)
 		{
 			noteBaseName = 'F';
 			noteStringIsSharp = false;
 		}
 
-		if (new String("B").equalsIgnoreCase(noteBaseName + "") && noteStringIsSharp)
+		if ("B".equalsIgnoreCase(noteBaseName + "") && noteStringIsSharp)
 		{
 			noteBaseName = 'C';
 			noteStringIsSharp = false;

@@ -3,7 +3,7 @@ package musical;
 import java.util.ArrayList;
 import java.util.List;
 
-import synth.utils.DefaultConstants;
+import utils.DefaultConstants;
 
 public class Note
 {
@@ -25,7 +25,7 @@ public class Note
 	{
 		this.noteName = noteName;
 		this.octave = octave;
-		this.frequency = NoteToFrequencyParser.getFrequencyFromOctaveAndNoteName(noteName, octave);
+		this.frequency = FrequencyParser.getFrequencyFromOctaveAndNoteName(noteName, octave);
 	}
 
 	public static List<Note> getNoteList()

@@ -2,8 +2,8 @@ package gui.panels;
 
 import javax.swing.event.ChangeListener;
 
+import configuration.FilterConfiguration;
 import gui.VariableSlider;
-import synth.configuration.FilterConfiguration;
 
 public class FilterConfigurationPanel extends ConfigurationPanel
 {
