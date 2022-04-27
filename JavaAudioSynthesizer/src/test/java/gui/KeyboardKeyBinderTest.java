@@ -1,4 +1,4 @@
-package synth;
+package gui;
 
 import static org.mockito.Mockito.mock;
 

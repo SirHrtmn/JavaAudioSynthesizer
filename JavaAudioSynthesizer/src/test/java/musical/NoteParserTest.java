@@ -1,4 +1,4 @@
-package synth;
+package musical;
 
 import org.junit.Assert;
 import org.junit.Test;

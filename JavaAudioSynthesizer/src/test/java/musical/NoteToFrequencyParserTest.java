@@ -1,4 +1,4 @@
-package synth;
+package musical;
 
 import java.util.HashMap;
 import java.util.Map;
