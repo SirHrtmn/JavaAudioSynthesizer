@@ -49,7 +49,7 @@ public class SynthesizerFactory
 			return builder.build(filterConfig, envConfig);
 		}
 
-		String message = String.format("Could not find synthesizer for %s", type.toString());
+		String message = String.format("Could not find synthesizer for %s", String.valueOf(type));
 		throw new SynthesizerNotFoundException(message);
 	}
 
