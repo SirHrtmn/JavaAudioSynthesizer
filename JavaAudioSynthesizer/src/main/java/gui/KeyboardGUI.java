@@ -14,9 +14,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
-import controlling.Keyboard;
+import controlling.Player;
 import gui.listeners.NoteButtonClickListener;
-import gui.listeners.NoteReleaseListener;
 import musical.Note;
 
 public class KeyboardGUI extends JPanel
@@ -28,21 +27,20 @@ public class KeyboardGUI extends JPanel
 	private static final int BUTTON_HEIGHT_FULLTONE = 200;
 	private static final int BUTTON_HEIGHT_SEMITONE = 150;
 
-	private Keyboard keyboard;
+	private Player player;
 	private List<NoteButton> noteButtons = new ArrayList<>();
 	private KeyboardKeyBinder keyBinder = new KeyboardKeyBinder(this);
 
 	private boolean configuredKeyListeners;
 
-	public KeyboardGUI(Keyboard keyboard)
+	public KeyboardGUI(Player keyboard)
 	{
 		super(new FlowLayout());
-		this.keyboard = keyboard;
+		this.player = keyboard;
 		super.setBorder(new BevelBorder(BevelBorder.RAISED));
 
 		setupKeySupportCheckBox();
 		setupKeyboardButtons();
-		addNoteReleaseListener();
 	}
 
 	public void pushNoteButton(Note note)
@@ -58,7 +56,7 @@ public class KeyboardGUI extends JPanel
 			noteButton.setPushed(true);
 		}
 
-		keyboard.pushButton(note);
+		player.noteOn(note);
 	}
 
 	public void releaseNoteButton(Note note)
@@ -69,7 +67,7 @@ public class KeyboardGUI extends JPanel
 			optionalNoteButton.get().setPushed(false);
 		}
 
-		keyboard.releaseButton(note);
+		player.noteOff(note);
 	}
 
 	private void setupKeySupportCheckBox()
@@ -109,19 +107,6 @@ public class KeyboardGUI extends JPanel
 			keyBinder.removeKeyBindings(noteButton);
 		}
 		configuredKeyListeners = false;
-	}
-
-	private void addNoteReleaseListener()
-	{
-		NoteReleaseListener listener = note -> {
-			Optional<NoteButton> noteButtonOptional = getNoteButton(note);
-			if (noteButtonOptional.isPresent())
-			{
-				noteButtonOptional.get().setPushed(false);
-			}
-		};
-
-		keyboard.addNoteReleaseListener(listener);
 	}
 
 	private Optional<NoteButton> getNoteButton(Note note)
@@ -171,12 +156,12 @@ public class KeyboardGUI extends JPanel
 			if (!noteButton.isPushed())
 			{
 
-				keyboard.pushButton(noteButton.getNote());
+				player.noteOn(noteButton.getNote());
 				noteButton.setPushed(true);
 				return;
 			}
 
-			keyboard.releaseButton(noteButton.getNote());
+			player.noteOff(noteButton.getNote());
 			noteButton.setPushed(false);
 		};
 
