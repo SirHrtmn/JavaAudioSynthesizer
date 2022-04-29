@@ -7,36 +7,32 @@ import gui.VariableSlider;
 
 public class FilterConfigurationPanel extends ConfigurationPanel
 {
-	private static final int rowCount = 4;
-	private static final int columnCount = 1;
+	private static final int ROW_COUNT = 4;
+	private static final int COLUMN_COUNT = 1;
 
 	private static final long serialVersionUID = 1L;
 
-	private VariableSlider lowPassSlider;
-	private VariableSlider bandPassSlider;
-	private VariableSlider highPassSlider;
+	private VariableSlider frequencySlider;
+	private VariableSlider resonanceSlider;
 	private VariableSlider amplitudeSlider;
 
 	private FilterConfiguration filterConfig;
 
 	public FilterConfigurationPanel(FilterConfiguration filterConfiguration)
 	{
-		super(rowCount, columnCount);
+		super(ROW_COUNT, COLUMN_COUNT);
 		this.filterConfig = filterConfiguration;
-		lowPassSlider = getNewSlider("LowPass", 0, 2500, filterConfig.getLowPass());
-		bandPassSlider = getNewSlider("BandPass", 0, 2500, filterConfig.getBandPass());
-		highPassSlider = getNewSlider("HighPass", 0, 2500, filterConfig.getHighPass());
-		amplitudeSlider = getNewSlider("Filter Amplitude", 0, 1, filterConfig.getAmplitude());
+		frequencySlider = getNewSlider("Frequency", 0, 3000, filterConfig.getFrequency());
+		resonanceSlider = getNewSlider("Resonance", 1.0, 3.0, filterConfig.getResonance());
+		amplitudeSlider = getNewSlider("Filter Amplitude", 0.01, 1.01, filterConfig.getAmplitude());
 
-		super.add(lowPassSlider);
-		super.add(bandPassSlider);
-		super.add(highPassSlider);
+		super.add(frequencySlider);
+		super.add(resonanceSlider);
 		super.add(amplitudeSlider);
 
 		ChangeListener changeListener = e -> applyConfiguration();
-		lowPassSlider.addChangeListener(changeListener);
-		bandPassSlider.addChangeListener(changeListener);
-		highPassSlider.addChangeListener(changeListener);
+		frequencySlider.addChangeListener(changeListener);
+		resonanceSlider.addChangeListener(changeListener);
 		amplitudeSlider.addChangeListener(changeListener);
 	}
 
@@ -49,9 +45,8 @@ public class FilterConfigurationPanel extends ConfigurationPanel
 	protected void updateConfiguration()
 	{
 		filterConfig.setAmplitude(amplitudeSlider.getValue());
-		filterConfig.setLowPass(lowPassSlider.getValue());
-		filterConfig.setBandPass(bandPassSlider.getValue());
-		filterConfig.setHighPass(highPassSlider.getValue());
+		filterConfig.setFrequency(frequencySlider.getValue());
+		filterConfig.setResonance(resonanceSlider.getValue());
 	}
 
 	public FilterConfiguration getConfig()

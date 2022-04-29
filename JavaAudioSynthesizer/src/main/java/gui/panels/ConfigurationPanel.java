@@ -38,6 +38,11 @@ public abstract class ConfigurationPanel extends JPanel
 		return new VariableSlider(name, min, max, (int) value);
 	}
 
+	protected VariableSlider getNewSlider(String name, double min, double max, double value)
+	{
+		return new VariableSlider(name, min, max, (int) value);
+	}
+
 	public abstract Object getConfig();
 
 	protected abstract void applyConfiguration();

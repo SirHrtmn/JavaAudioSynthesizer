@@ -14,6 +14,8 @@ public class VariableSlider extends JPanel
 	private JLabel valueLabel;
 	private JLabel descriptionLabel;
 
+	private int resolution = 1;
+
 	public VariableSlider(String name, int min, int max, int value)
 	{
 		super(new BorderLayout());
@@ -30,13 +32,37 @@ public class VariableSlider extends JPanel
 		super.add(valueLabel, BorderLayout.WEST);
 	}
 
+	public VariableSlider(String name, double min, double max, int value)
+	{
+		super(new BorderLayout());
+		resolution = getNumberOfDecimalPlaces(max) * 10;
+		slider = new JSlider((int) min * resolution, (int) max * resolution, value * resolution);
+		valueLabel = new JLabel(value + "");
+		descriptionLabel = new JLabel(name);
+
+		slider.addChangeListener(e -> valueLabel.setText(slider.getValue() + ""));
+		valueLabel.setLabelFor(slider);
+		descriptionLabel.setLabelFor(slider);
+
+		super.add(slider, BorderLayout.EAST);
+		super.add(descriptionLabel, BorderLayout.NORTH);
+		super.add(valueLabel, BorderLayout.WEST);
+	}
+
+	private int getNumberOfDecimalPlaces(double max)
+	{
+		String doubleAsString = Double.toString(max);
+		int indexOfDecimalPoint = doubleAsString.indexOf(".");
+		return doubleAsString.length() - (indexOfDecimalPoint + 1);
+	}
+
 	public void addChangeListener(ChangeListener changeListener)
 	{
 		slider.addChangeListener(changeListener);
 	}
 
-	public int getValue()
+	public double getValue()
 	{
-		return slider.getValue();
+		return (double)slider.getValue() / resolution;
 	}
 }
