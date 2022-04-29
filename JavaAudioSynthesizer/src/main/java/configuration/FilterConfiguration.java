@@ -3,48 +3,15 @@ package configuration;
 public class FilterConfiguration
 {
 
-	private double lowPass;
-	private double bandPass;
-	private double highPass;
+	private double frequency;
+	private double resonance;
 	private double amplitude;
 
-	public FilterConfiguration(double lowPass, double bandPass, double highPass, double amplitude)
+	public FilterConfiguration(double frequency, double resonance, double amplitude)
 	{
-		super();
-		this.lowPass = lowPass;
-		this.bandPass = bandPass;
-		this.highPass = highPass;
+		this.setFrequency(frequency);
+		this.setResonance(resonance);
 		this.setAmplitude(amplitude);
-	}
-
-	public double getLowPass()
-	{
-		return lowPass;
-	}
-
-	public void setLowPass(double lowPass)
-	{
-		this.lowPass = lowPass;
-	}
-
-	public double getBandPass()
-	{
-		return bandPass;
-	}
-
-	public void setBandPass(double bandPass)
-	{
-		this.bandPass = bandPass;
-	}
-
-	public double getHighPass()
-	{
-		return highPass;
-	}
-
-	public void setHighPass(double highPass)
-	{
-		this.highPass = highPass;
 	}
 
 	public double getAmplitude()
@@ -55,5 +22,25 @@ public class FilterConfiguration
 	public void setAmplitude(double amplitude)
 	{
 		this.amplitude = amplitude;
+	}
+
+	public double getResonance()
+	{
+		return resonance;
+	}
+
+	public void setResonance(double resonance)
+	{
+		this.resonance = resonance;
+	}
+
+	public double getFrequency()
+	{
+		return frequency;
+	}
+
+	public void setFrequency(double frequency)
+	{
+		this.frequency = frequency;
 	}
 }

@@ -3,10 +3,7 @@ package synthesis.jsyn;
 import com.jsyn.ports.UnitOutputPort;
 import com.jsyn.unitgen.Circuit;
 import com.jsyn.unitgen.EnvelopeDAHDSR;
-import com.jsyn.unitgen.FilterBandPass;
-import com.jsyn.unitgen.FilterHighPass;
-import com.jsyn.unitgen.FilterLowPass;
-import com.jsyn.unitgen.PassThrough;
+import com.jsyn.unitgen.FilterStateVariable;
 import com.jsyn.unitgen.UnitOscillator;
 
 import configuration.EnvelopeConfiguration;
@@ -17,11 +14,7 @@ public class OscillatorCircuit extends Circuit implements UnitsCircuit
 {
 	private UnitOscillator oscillator;
 	private EnvelopeDAHDSR envelope;
-	private FilterBandPass bandPass;
-	private FilterLowPass lowPass;
-	private FilterHighPass highPass;
-	private PassThrough passThrough;
-	private PassThrough output;
+	private FilterStateVariable filter;
 
 	public OscillatorCircuit(UnitOscillator oscillator, FilterConfiguration filterConfig,
 			EnvelopeConfiguration envConfig)
@@ -37,7 +30,7 @@ public class OscillatorCircuit extends Circuit implements UnitsCircuit
 	@Override
 	public UnitOutputPort getOutput()
 	{
-		return output.getOutput();
+		return filter.getOutput();
 	}
 
 	@Override
@@ -56,7 +49,7 @@ public class OscillatorCircuit extends Circuit implements UnitsCircuit
 	@Override
 	public void applyFilterConfiguration(FilterConfiguration filterConfig)
 	{
-		ConfigurationHelper.applyForFilter(lowPass, bandPass, highPass, filterConfig);
+		ConfigurationHelper.applyForFilter(filter, filterConfig);
 	}
 
 	@Override
@@ -69,36 +62,19 @@ public class OscillatorCircuit extends Circuit implements UnitsCircuit
 	{
 		this.oscillator = oscillator;
 		envelope = new EnvelopeDAHDSR();
-		passThrough = new PassThrough();
-		output = new PassThrough();
-
-		bandPass = new FilterBandPass();
-		lowPass = new FilterLowPass();
-		highPass = new FilterHighPass();
+		filter = new FilterStateVariable();
 	}
 
 	private void addUnits()
 	{
 		super.add(envelope);
 		super.add(oscillator);
-		super.add(bandPass);
-		super.add(lowPass);
-		super.add(highPass);
-		super.add(passThrough);
-		super.add(output);
+		super.add(filter);
 	}
 
 	private void connectUnits()
 	{
 		envelope.output.connect(oscillator.amplitude);
-		oscillator.output.connect(passThrough.input);
-
-		passThrough.output.connect(lowPass.input);
-		passThrough.output.connect(bandPass.input);
-		passThrough.output.connect(highPass.input);
-
-		lowPass.output.connect(output.input);
-		bandPass.output.connect(output.input);
-		highPass.output.connect(output.input);
+		oscillator.output.connect(filter.input);
 	}
 }

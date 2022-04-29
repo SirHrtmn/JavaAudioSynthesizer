@@ -68,23 +68,4 @@ public class EnvelopeConfiguration
 	{
 		this.release = release;
 	}
-
-	@Override
-	public boolean equals(Object object)
-	{
-		if (!(object instanceof EnvelopeConfiguration))
-		{
-			return false;
-		}
-
-		EnvelopeConfiguration envConfig = (EnvelopeConfiguration) object;
-
-		boolean delayEqual = Double.compare(delay, envConfig.delay) == 0;
-		boolean attackEqual = Double.compare(attack, envConfig.attack) == 0;
-		boolean decayEqual = Double.compare(decay, envConfig.decay) == 0;
-		boolean holdEqual = Double.compare(hold, envConfig.hold) == 0;
-		boolean releaseEqual = Double.compare(release, envConfig.release) == 0;
-
-		return delayEqual && attackEqual && decayEqual && holdEqual && releaseEqual;
-	}
 }

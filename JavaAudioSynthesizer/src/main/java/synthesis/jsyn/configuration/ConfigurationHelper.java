@@ -1,9 +1,7 @@
 package synthesis.jsyn.configuration;
 
 import com.jsyn.unitgen.EnvelopeDAHDSR;
-import com.jsyn.unitgen.FilterBandPass;
-import com.jsyn.unitgen.FilterHighPass;
-import com.jsyn.unitgen.FilterLowPass;
+import com.jsyn.unitgen.FilterStateVariable;
 
 import configuration.EnvelopeConfiguration;
 import configuration.FilterConfiguration;
@@ -24,15 +22,10 @@ public class ConfigurationHelper
 		envelope.release.set(envConfig.getRelease());
 	}
 
-	public static void applyForFilter(FilterLowPass lowPass, FilterBandPass bandPass,
-			FilterHighPass highPass, FilterConfiguration filterConfig)
+	public static void applyForFilter(FilterStateVariable filter, FilterConfiguration filterConfig)
 	{
-		lowPass.frequency.set(filterConfig.getLowPass());
-		bandPass.frequency.set(filterConfig.getBandPass());
-		highPass.frequency.set(filterConfig.getHighPass());
-
-		lowPass.amplitude.set(filterConfig.getAmplitude());
-		bandPass.amplitude.set(filterConfig.getAmplitude());
-		highPass.amplitude.set(filterConfig.getAmplitude());
+		filter.amplitude.set(filterConfig.getAmplitude());
+		filter.resonance.set(filterConfig.getResonance());
+		filter.frequency.set(filterConfig.getFrequency());
 	}
 }
