@@ -7,26 +7,28 @@ import utils.DefaultConstants;
 
 public class Controller
 {
+	private SynthesizerPool synthPool;
 	private Player player;
 
 	public Controller()
 	{
-		player = new Player(DefaultConstants.getOscillatorType());
+		this.synthPool = SynthesizerPool.getInstance(DefaultConstants.getOscillatorType());
+		this.player = new Player(synthPool);
 	}
 
 	public void setOscillatorType(OscillatorType type)
 	{
-		player.setOscillatorType(type);
+		synthPool.setOscillatorType(type);
 	}
 
 	public void applyFilterConfiguration(FilterConfiguration filterConfig)
 	{
-		player.applyFilterConfiguration(filterConfig);
+		synthPool.applyFilterConfiguration(filterConfig);
 	}
 
 	public void applyEnvelopeConfiguration(EnvelopeConfiguration envelopeConfig)
 	{
-		player.applyEnvelopeConfiguration(envelopeConfig);
+		synthPool.applyEnvelopeConfiguration(envelopeConfig);
 	}
 
 	public Player getPlayer()

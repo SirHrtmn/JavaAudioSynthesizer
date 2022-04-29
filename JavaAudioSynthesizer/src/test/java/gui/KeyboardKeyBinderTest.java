@@ -11,11 +11,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import controlling.Keyboard;
-import gui.KeyboardGUI;
-import gui.KeyboardKeyAction;
-import gui.KeyboardKeyBinder;
-import gui.NoteButton;
+import controlling.Player;
 import musical.Note;
 
 public class KeyboardKeyBinderTest
@@ -27,7 +23,7 @@ public class KeyboardKeyBinderTest
 	@Before
 	public void setupTest()
 	{
-		keyboardGUIMock = new KeyboardGUI(mock(Keyboard.class));
+		keyboardGUIMock = new KeyboardGUI(mock(Player.class));
 		keyBinder = new KeyboardKeyBinder(keyboardGUIMock);
 	}
 

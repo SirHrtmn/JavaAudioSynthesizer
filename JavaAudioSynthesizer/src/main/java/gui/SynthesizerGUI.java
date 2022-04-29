@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import configuration.EnvelopeConfiguration;
 import configuration.FilterConfiguration;
 import controlling.Controller;
-import controlling.Keyboard;
 import controlling.Player;
 import gui.panels.EnvelopeConfigurationPanel;
 import gui.panels.FilterConfigurationPanel;
@@ -64,7 +63,7 @@ public class SynthesizerGUI extends JFrame
 	private void initializeKeyboard()
 	{
 		Player player = controller.getPlayer();
-		keyboard = new KeyboardGUI(new Keyboard(player));
+		keyboard = new KeyboardGUI(player);
 	}
 
 	private void initializeEnvelopePanel()
