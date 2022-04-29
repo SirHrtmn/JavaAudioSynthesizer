@@ -6,13 +6,15 @@ import java.util.function.Consumer;
 
 import configuration.EnvelopeConfiguration;
 import configuration.FilterConfiguration;
+import exceptions.MaximumSynthesizerCountReachedException;
 import synthesis.ISynthesizer;
 import synthesis.OscillatorType;
 import synthesis.SynthesizerFactory;
 
 public class SynthesizerPool
 {
-	private static final int DEFAULT_SYNTHESIZER_COUNT = 5;
+	public static final int DEFAULT_SYNTHESIZER_COUNT = 5;
+	public static final int MAXIMUM_SYNTHESIZER_COUNT = 15;
 
 	private static SynthesizerPool instance;
 
@@ -42,7 +44,7 @@ public class SynthesizerPool
 	{
 		if (freeConnections.isEmpty())
 		{
-			freeConnections.add(createSynthConnection());
+			enhanceSynthesizerPool();
 			return acquireSynthesizer();
 		}
 
@@ -51,20 +53,20 @@ public class SynthesizerPool
 		return synth;
 	}
 
-	public void releaseSynthesizer(SynthesizerConnection synthConnection)
+	public boolean releaseSynthesizer(SynthesizerConnection synthConnection)
 	{
 		if (!acquiredConnections.contains(synthConnection))
 		{
-			return;
+			return false;
 		}
 
 		if (!oscillatorType.equals(synthConnection.getOscillatorType()))
 		{
-			acquiredConnections.remove(synthConnection);
+			return acquiredConnections.remove(synthConnection);
 		}
 
 		acquiredConnections.remove(synthConnection);
-		freeConnections.add(synthConnection);
+		return freeConnections.add(synthConnection);
 	}
 
 	public void setOscillatorType(OscillatorType type)
@@ -97,11 +99,22 @@ public class SynthesizerPool
 		applyForEachInList(updateEnv, acquiredConnections);
 	}
 
+	private void enhanceSynthesizerPool()
+	{
+		if (acquiredConnections.size() < MAXIMUM_SYNTHESIZER_COUNT)
+		{
+			freeConnections.add(createSynthConnection());
+			return;
+		}
+	
+		throw new MaximumSynthesizerCountReachedException();
+	}
+
 	private void loadSynthesizers(int amount)
 	{
 		for (int i = 0; i < amount; i++)
 		{
-			freeConnections.add(createSynthConnection());
+			enhanceSynthesizerPool();
 		}
 	}
 
