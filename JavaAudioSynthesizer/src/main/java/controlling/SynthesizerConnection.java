@@ -14,7 +14,7 @@ public class SynthesizerConnection
 
 	public SynthesizerConnection(ISynthesizer synthesizer)
 	{
-		this.setSynthesizer(synthesizer);
+		this.synthesizer = synthesizer;
 	}
 
 	public ISynthesizer getSynthesizer()
