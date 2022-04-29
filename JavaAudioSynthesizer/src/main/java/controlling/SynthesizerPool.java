@@ -16,7 +16,7 @@ public class SynthesizerPool
 
 	private static SynthesizerPool instance;
 
-	private List<SynthesizerConnection> freeSynths = new ArrayList<>();
+	private List<SynthesizerConnection> freeConnections = new ArrayList<>();
 	private List<SynthesizerConnection> acquiredConnections = new ArrayList<>();
 
 	private OscillatorType oscillatorType;
@@ -40,13 +40,13 @@ public class SynthesizerPool
 
 	public SynthesizerConnection acquireSynthesizer()
 	{
-		if (!freeSynths.isEmpty())
+		if (freeConnections.isEmpty())
 		{
-			freeSynths.add(createSynthConnection());
+			freeConnections.add(createSynthConnection());
 			return acquireSynthesizer();
 		}
 
-		SynthesizerConnection synth = freeSynths.remove(0);
+		SynthesizerConnection synth = freeConnections.remove(0);
 		acquiredConnections.add(synth);
 		return synth;
 	}
@@ -64,7 +64,7 @@ public class SynthesizerPool
 		}
 
 		acquiredConnections.remove(synthConnection);
-		freeSynths.add(synthConnection);
+		freeConnections.add(synthConnection);
 	}
 
 	public void setOscillatorType(OscillatorType type)
@@ -75,7 +75,7 @@ public class SynthesizerPool
 		}
 
 		this.oscillatorType = type;
-		applyForEachInList(conn -> conn.setSynthesizer(createSynthesizer()), freeSynths);
+		applyForEachInList(conn -> conn.setSynthesizer(createSynthesizer()), freeConnections);
 		applyForEachInList(conn -> conn.setSynthesizer(createSynthesizer()), acquiredConnections);
 	}
 
@@ -84,7 +84,7 @@ public class SynthesizerPool
 		Consumer<SynthesizerConnection> updateFilter = conn -> conn
 				.applyFilterConfiguration(filterConfig);
 
-		applyForEachInList(updateFilter, freeSynths);
+		applyForEachInList(updateFilter, freeConnections);
 		applyForEachInList(updateFilter, acquiredConnections);
 	}
 
@@ -93,7 +93,7 @@ public class SynthesizerPool
 		Consumer<SynthesizerConnection> updateEnv = conn -> conn
 				.applyEnvelopeConfiguration(envConfig);
 
-		applyForEachInList(updateEnv, freeSynths);
+		applyForEachInList(updateEnv, freeConnections);
 		applyForEachInList(updateEnv, acquiredConnections);
 	}
 
@@ -101,7 +101,7 @@ public class SynthesizerPool
 	{
 		for (int i = 0; i < amount; i++)
 		{
-			freeSynths.add(createSynthConnection());
+			freeConnections.add(createSynthConnection());
 		}
 	}
 
