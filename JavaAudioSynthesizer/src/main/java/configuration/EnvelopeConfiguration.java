@@ -1,12 +1,20 @@
 package configuration;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "EnvelopeConfiguration")
 public class EnvelopeConfiguration
 {
-	private double delay;
-	private double attack;
-	private double decay;
-	private double hold;
-	private double release;
+	private double delay = 0.0;
+	private double attack = 0.0;
+	private double decay = 0.0;
+	private double hold = 0.0;
+	private double release = 0.0;
+
+	EnvelopeConfiguration()
+	{
+		// non parameter constructor needed for xml marshalling
+	}
 
 	public EnvelopeConfiguration(double delay, double attack, double decay, double hold,
 			double release)

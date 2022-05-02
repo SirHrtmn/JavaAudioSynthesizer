@@ -1,11 +1,19 @@
 package configuration;
 
+import jakarta.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "FilterConfiguration")
 public class FilterConfiguration
 {
 
-	private double frequency;
-	private double resonance;
-	private double amplitude;
+	private double frequency = 0.0;
+	private double resonance = 0.0;
+	private double amplitude = 0.0;
+
+	FilterConfiguration()
+	{
+		// non parameter constructor needed for xml marshalling
+	}
 
 	public FilterConfiguration(double frequency, double resonance, double amplitude)
 	{

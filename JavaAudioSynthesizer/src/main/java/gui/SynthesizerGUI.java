@@ -7,11 +7,13 @@ import javax.swing.JPanel;
 
 import configuration.EnvelopeConfiguration;
 import configuration.FilterConfiguration;
+import configuration.Preset;
 import controlling.Controller;
 import controlling.Player;
 import gui.panels.EnvelopeConfigurationPanel;
 import gui.panels.FilterConfigurationPanel;
 import gui.panels.OscillatorSelectionPanel;
+import gui.panels.PresetPanel;
 import utils.DefaultConstants;
 
 public class SynthesizerGUI extends JFrame
@@ -25,12 +27,24 @@ public class SynthesizerGUI extends JFrame
 	private KeyboardGUI keyboard;
 	private JPanel mainPanel;
 	private OscillatorSelectionPanel selectionPanel;
+	private PresetPanel presetPanel;
 
 	public SynthesizerGUI(Controller controller)
 	{
 		super("Java Audio Synthesizer");
 		this.controller = controller;
 		setupGUI();
+	}
+
+	public Preset buildPreset()
+	{
+		return new Preset(filterPanel.getConfig(), envelopePanel.getConfig());
+	}
+
+	public void applyPreset(Preset preset)
+	{
+		controller.applyEnvelopeConfiguration(preset.getEnvConfig());
+		controller.applyFilterConfiguration(preset.getFilterConfig());
 	}
 
 	private void setupGUI()
@@ -40,8 +54,9 @@ public class SynthesizerGUI extends JFrame
 
 		initializeFilterPanel();
 		initializeEnvelopePanel();
+		initializeSelectionPanel();
+		initializePresetPanel();
 		initializeKeyboard();
-		initializeVoiceSelectionPanel();
 
 		setupMainPanel();
 
@@ -58,6 +73,7 @@ public class SynthesizerGUI extends JFrame
 		mainPanel.add(envelopePanel, BorderLayout.WEST);
 		mainPanel.add(keyboard, BorderLayout.SOUTH);
 		mainPanel.add(selectionPanel, BorderLayout.NORTH);
+		mainPanel.add(presetPanel, BorderLayout.CENTER);
 	}
 
 	private void initializeKeyboard()
@@ -82,10 +98,18 @@ public class SynthesizerGUI extends JFrame
 				e -> controller.applyFilterConfiguration(filterPanel.getConfig()));
 	}
 
-	private void initializeVoiceSelectionPanel()
+	private void initializeSelectionPanel()
 	{
 		selectionPanel = new OscillatorSelectionPanel();
-		selectionPanel.addOscillatorSelectionListener(type -> controller.setOscillatorType(type));
+		selectionPanel.addOscillatorSelectionListener(type -> {
+			controller.setOscillatorType(type);
+			this.applyPreset(this.buildPreset());
+		});
+	}
+
+	private void initializePresetPanel()
+	{
+		presetPanel = new PresetPanel(this, DefaultConstants.getPreset());
 	}
 
 	public static void main(String[] args)

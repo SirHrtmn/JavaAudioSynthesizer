@@ -5,6 +5,7 @@ import java.util.Map;
 
 import configuration.EnvelopeConfiguration;
 import configuration.FilterConfiguration;
+import configuration.Preset;
 import musical.NoteName;
 import synthesis.OscillatorType;
 
@@ -28,6 +29,11 @@ public class DefaultConstants
 	public static EnvelopeConfiguration getEnvelopeConfig()
 	{
 		return new EnvelopeConfiguration(0.0, 0.2, 1.0, 1.0, 0.2);
+	}
+
+	public static Preset getPreset()
+	{
+		return new Preset("Default", getFilterConfig(), getEnvelopeConfig());
 	}
 
 	public static OscillatorType getOscillatorType()
