@@ -12,8 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 import configuration.Preset;
-import configuration.PresetFileHelper;
 import gui.SynthesizerGUI;
+import utils.FileHelper;
+import utils.MarshallHelper;
 
 public class PresetPanel extends JPanel
 {
@@ -68,11 +69,11 @@ public class PresetPanel extends JPanel
 
 		if (optionalFile.isPresent())
 		{
-			Optional<Preset> optionalPreset = PresetFileHelper.readFile(optionalFile.get());
-			if (optionalPreset.isPresent())
+			Optional<Object> optionalPreset = readPreset(optionalFile.get());
+			if (optionalPreset.isPresent() && optionalPreset.get() instanceof Preset preset)
 			{
-				synthGUI.applyPreset(optionalPreset.get());
-				this.currentPreset = optionalPreset.get();
+				synthGUI.applyPreset(preset);
+				this.currentPreset = preset;
 			}
 			return;
 		}
@@ -87,7 +88,8 @@ public class PresetPanel extends JPanel
 		{
 			Preset preset = synthGUI.buildPreset();
 			preset.setName(showPresetNameInput());
-			PresetFileHelper.writePreset(optionalFile.get(), preset);
+			writePreset(optionalFile.get(), preset);
+
 			showMessage("Preset successfully saved!");
 			setCurrentPreset(preset);
 			return;
@@ -130,5 +132,17 @@ public class PresetPanel extends JPanel
 			return Optional.empty();
 		}
 		return Optional.of(new File(directory + fileName));
+	}
+
+	private void writePreset(File file, Preset preset)
+	{
+		MarshallHelper marshaller = new MarshallHelper(Preset.class);
+		FileHelper.writeFile(file, marshaller.marshall(preset));
+	}
+
+	private Optional<Object> readPreset(File file)
+	{
+		String fileContent = FileHelper.readFile(file);
+		return new MarshallHelper(Preset.class).unmarshall(fileContent);
 	}
 }
