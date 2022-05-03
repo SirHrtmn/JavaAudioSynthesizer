@@ -6,8 +6,6 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.Test;
 
-import musical.FrequencyParser;
-
 public class NoteToFrequencyParserTest
 {
 
@@ -74,20 +72,20 @@ public class NoteToFrequencyParserTest
 		assertFrequencyFromOctaveAndSemitones(0, 12, 32.7032);
 		assertFrequencyFromOctaveAndSemitones(0, 24, 65.4064);
 		assertFrequencyFromOctaveAndSemitones(0, 36, 130.8128);
-		
+
 		// Test all semi tones in central octave (4)
-		assertFrequencyFromOctaveAndSemitones(4, 0, 261.6256);	/* C  */
-		assertFrequencyFromOctaveAndSemitones(4, 1, 277.1826);  /* C# */
-		assertFrequencyFromOctaveAndSemitones(4, 2, 293.6648);  /* D  */
-		assertFrequencyFromOctaveAndSemitones(4, 3, 311.127);   /* D# */
-		assertFrequencyFromOctaveAndSemitones(4, 4, 329.6276);  /* E  */
-		assertFrequencyFromOctaveAndSemitones(4, 5, 349.2282);  /* F  */
-		assertFrequencyFromOctaveAndSemitones(4, 6, 369.9944);  /* F# */
-		assertFrequencyFromOctaveAndSemitones(4, 7, 391.9954);  /* G  */
-		assertFrequencyFromOctaveAndSemitones(4, 8, 415.3047);  /* G# */
-		assertFrequencyFromOctaveAndSemitones(4, 9, 440.0);     /* A  */
+		assertFrequencyFromOctaveAndSemitones(4, 0, 261.6256); /* C */
+		assertFrequencyFromOctaveAndSemitones(4, 1, 277.1826); /* C# */
+		assertFrequencyFromOctaveAndSemitones(4, 2, 293.6648); /* D */
+		assertFrequencyFromOctaveAndSemitones(4, 3, 311.127); /* D# */
+		assertFrequencyFromOctaveAndSemitones(4, 4, 329.6276); /* E */
+		assertFrequencyFromOctaveAndSemitones(4, 5, 349.2282); /* F */
+		assertFrequencyFromOctaveAndSemitones(4, 6, 369.9944); /* F# */
+		assertFrequencyFromOctaveAndSemitones(4, 7, 391.9954); /* G */
+		assertFrequencyFromOctaveAndSemitones(4, 8, 415.3047); /* G# */
+		assertFrequencyFromOctaveAndSemitones(4, 9, 440.0); /* A */
 		assertFrequencyFromOctaveAndSemitones(4, 10, 466.1638); /* A# */
-		assertFrequencyFromOctaveAndSemitones(4, 11, 493.8833); /* B  */
+		assertFrequencyFromOctaveAndSemitones(4, 11, 493.8833); /* B */
 	}
 
 	@Test
@@ -96,14 +94,14 @@ public class NoteToFrequencyParserTest
 		assertFrequencyFromInvalidOctaveAndSemitones(0, -12);
 		assertFrequencyFromInvalidOctaveAndSemitones(8, 13);
 		assertFrequencyFromInvalidOctaveAndSemitones(0, -24);
-		assertFrequencyFromInvalidOctaveAndSemitones(0, -(int)9E9);
+		assertFrequencyFromInvalidOctaveAndSemitones(0, -(int) 9E9);
 		assertFrequencyFromInvalidOctaveAndSemitones(8, 24);
-		assertFrequencyFromInvalidOctaveAndSemitones(8, (int)9E9);
-		
+		assertFrequencyFromInvalidOctaveAndSemitones(8, (int) 9E9);
+
 		assertFrequencyFromInvalidOctaveAndSemitones(-1, 0);
-		assertFrequencyFromInvalidOctaveAndSemitones(-(int)9E9, 0);
-		assertFrequencyFromInvalidOctaveAndSemitones((int)9E9, (int)9E9);
-		assertFrequencyFromInvalidOctaveAndSemitones(-(int)9E9, -(int)9E9);
+		assertFrequencyFromInvalidOctaveAndSemitones(-(int) 9E9, 0);
+		assertFrequencyFromInvalidOctaveAndSemitones((int) 9E9, (int) 9E9);
+		assertFrequencyFromInvalidOctaveAndSemitones(-(int) 9E9, -(int) 9E9);
 		assertFrequencyFromInvalidOctaveAndSemitones(9, 0);
 		assertFrequencyFromInvalidOctaveAndSemitones(9, -12);
 	}
@@ -115,12 +113,10 @@ public class NoteToFrequencyParserTest
 
 	private double parseFrequency(int octave, int semiTone)
 	{
-		return FrequencyParser.getFrequencyFromOctaveAndSemiTone(octave,
-				semiTone);
+		return FrequencyParser.getFrequencyFromOctaveAndSemiTone(octave, semiTone);
 	}
 
-	private void assertFrequencyWithNoteIndex(double expectedFrequency,
-			int noteIndex)
+	private void assertFrequencyWithNoteIndex(double expectedFrequency, int noteIndex)
 	{
 		String message = String.format("Parsed note index %s -", noteIndex);
 		double parsedFrequency = parseFrequency(noteIndex);
@@ -133,8 +129,7 @@ public class NoteToFrequencyParserTest
 		try
 		{
 			parseFrequency(noteIndex);
-			Assert.fail("Expected exception thrown because of invalid note index "
-					+ noteIndex);
+			Assert.fail("Expected exception thrown because of invalid note index " + noteIndex);
 		}
 		catch (IndexOutOfBoundsException e)
 		{
@@ -142,11 +137,9 @@ public class NoteToFrequencyParserTest
 		}
 	}
 
-	private void assertFrequencyFromOctaveAndSemitones(int octave, int semiTones,
-			double frequency)
+	private void assertFrequencyFromOctaveAndSemitones(int octave, int semiTones, double frequency)
 	{
-		String message = String.format("Parsed octave: %s, semitone: %s -", octave,
-				semiTones);
+		String message = String.format("Parsed octave: %s, semitone: %s -", octave, semiTones);
 		double parsedFrequency = parseFrequency(octave, semiTones);
 
 		Assert.assertEquals(message, frequency, parsedFrequency, DELTA);
@@ -157,8 +150,8 @@ public class NoteToFrequencyParserTest
 		try
 		{
 			parseFrequency(octave, semiTones);
-			Assert.fail("Expected exception thrown because of invalid octave "
-					+ octave + " or semiTone " + semiTones);
+			Assert.fail("Expected exception thrown because of invalid octave " + octave
+					+ " or semiTone " + semiTones);
 		}
 		catch (IndexOutOfBoundsException e)
 		{
