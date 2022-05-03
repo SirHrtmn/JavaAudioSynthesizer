@@ -12,7 +12,7 @@ public class FrequencyParser
 		// static class -> no constructor needed
 	}
 
-	public static double getFrequencyFromOctaveAndNoteName(NoteName noteName, int octave)
+	public static double getFrequency(NoteName noteName, int octave)
 	{
 		int semiTone = noteName.ordinal();
 		return getFrequencyFromOctaveAndSemiTone(octave, semiTone);

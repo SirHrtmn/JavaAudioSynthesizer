@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import musical.Note;
+import musical.Playable;
 
 public class Player
 {
@@ -34,5 +35,10 @@ public class Player
 
 		noteSynthPairs.remove(note);
 		synthPool.releaseSynthesizer(synthConnection);
+	}
+
+	public void play(Playable playable)
+	{
+		playable.play(this);
 	}
 }

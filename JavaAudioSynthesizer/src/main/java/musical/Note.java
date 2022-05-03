@@ -3,13 +3,22 @@ package musical;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import utils.DefaultConstants;
 
+@XmlRootElement
 public class Note
 {
-	private double frequency;
+	@XmlElement
 	private NoteName noteName;
+	@XmlElement
 	private int octave;
+
+	Note()
+	{
+		// no-arg contructor required for xml marshalling
+	}
 
 	public Note(String note)
 	{
@@ -25,7 +34,6 @@ public class Note
 	{
 		this.noteName = noteName;
 		this.octave = octave;
-		this.frequency = FrequencyParser.getFrequencyFromOctaveAndNoteName(noteName, octave);
 	}
 
 	public static List<Note> getNoteList()
@@ -42,7 +50,7 @@ public class Note
 
 	public double getFrequency()
 	{
-		return frequency;
+		return FrequencyParser.getFrequency(noteName, octave);
 	}
 
 	public NoteName getNoteName()
