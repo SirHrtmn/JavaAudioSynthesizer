@@ -1,5 +1,8 @@
 package musical;
 
+import java.util.Arrays;
+import java.util.List;
+
 import controlling.Player;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -34,6 +37,12 @@ public class Melody implements Playable
 			TimeUtils.waitForASpecifiedTime(duration);
 			player.noteOff(note);
 		}
+	}
+
+	@Override
+	public List<Note> getNotes()
+	{
+		return Arrays.asList(notes);
 	}
 
 }
