@@ -43,8 +43,7 @@ public class SynthesizerGUI extends JFrame
 
 	public void applyPreset(Preset preset)
 	{
-		controller.applyEnvelopeConfiguration(preset.getEnvConfig());
-		controller.applyFilterConfiguration(preset.getFilterConfig());
+		controller.applyPreset(preset);
 	}
 
 	private void setupGUI()

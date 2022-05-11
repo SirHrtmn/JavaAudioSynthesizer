@@ -2,6 +2,7 @@ package controlling;
 
 import configuration.EnvelopeConfiguration;
 import configuration.FilterConfiguration;
+import configuration.Preset;
 import synthesis.OscillatorType;
 import utils.DefaultConstants;
 
@@ -29,6 +30,12 @@ public class Controller
 	public void applyEnvelopeConfiguration(EnvelopeConfiguration envelopeConfig)
 	{
 		synthPool.applyEnvelopeConfiguration(envelopeConfig);
+	}
+
+	public void applyPreset(Preset preset)
+	{
+		synthPool.applyEnvelopeConfiguration(preset.getEnvConfig());
+		synthPool.applyFilterConfiguration(preset.getFilterConfig());
 	}
 
 	public Player getPlayer()
